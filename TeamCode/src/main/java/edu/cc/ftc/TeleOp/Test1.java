@@ -29,12 +29,13 @@
 
 package edu.cc.ftc.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
+import edu.cc.ftc.Utilities.RPM;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 /**
  * This file provides basic Telop driving for a Pushbot robot.
@@ -56,7 +57,8 @@ import edu.cc.ftc.HardwareCC.Hardware1;
 public class Test1 extends OpMode{
 
     /* Declare OpMode members. */
-    Hardware1 robot       = new Hardware1(); // use the class created to define a Pushbot's hardware
+    Hardware1 robot = new Hardware1(); // use the class created to define a Pushbot's hardware
+    RPM rpm = new RPM();
     double          clawOffset  = 0.0 ;                  // Servo mid position
     final double    CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
 
@@ -68,6 +70,19 @@ public class Test1 extends OpMode{
     private double lR;
     private double rR;
     private double spin;
+    private double pos;
+
+    private double correction;
+    private double speed;
+    private double i;
+
+    private double timeI;
+    private double timeF;
+    private double time;
+    private double encoderI;
+    private double encoderF;
+    private double encoder;
+    private double TPC;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -78,6 +93,7 @@ public class Test1 extends OpMode{
          */
         robot.init(hardwareMap);
 
+        correction = 1;
 
 
         // Send telemetry message to signify robot waiting;
@@ -96,6 +112,7 @@ public class Test1 extends OpMode{
      */
     @Override
     public void start() {
+        encoderI = robot.Drive0.getCurrentPosition();
     }
 
     /*
@@ -126,10 +143,38 @@ public class Test1 extends OpMode{
 
  */
         spin = gamepad1.right_trigger;
-        robot.Drive1.setPower(spin);
+        pos = robot.Drive0.getCurrentPosition();
+        speed = spin * correction;
+
+
+        robot.Drive0.setPower(speed);
+        robot.Drive1.setPower(speed);
+
         telemetry.addData("spin speed", spin);
+        telemetry.addData("position", pos);
 
+        encoderF = robot.Drive0.getCurrentPosition();
+        encoder = encoderF - encoderI;
+        encoderI = encoderF;
+        telemetry.addData("Ticks per code cycle = ", encoder);
 
+        if (spin == 1 && encoder > 5){
+            correction = correction - .001;
+            telemetry.addData("up", 0);
+        }
+
+        if (spin == 1 && encoder < 5 && i >= 250){
+            correction = correction + .01;
+            telemetry.addData("down", 0);
+        }
+        if (spin == 1 && encoder < 5){
+            i++;
+        }
+
+        if (spin == 1 && encoder == 5){
+            i = 0;
+        }
+        telemetry.addData("correction = ", correction);
     }
 
     /*

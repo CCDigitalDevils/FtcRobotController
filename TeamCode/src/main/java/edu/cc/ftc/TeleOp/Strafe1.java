@@ -29,12 +29,9 @@
 
 package edu.cc.ftc.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 
@@ -119,10 +116,10 @@ public class Strafe1 extends OpMode{
         lF = Range.clip(lF, -1, 1);
         rF = Range.clip(rF, -1, 1);
 
-        robot.Drive1.setPower(lF);
-        robot.Drive2.setPower(rF);
-        robot.Drive3.setPower(lR);
-        robot.Drive4.setPower(rR);
+        robot.Drive0.setPower(lF);
+        robot.Drive1.setPower(rF);
+        robot.Drive2.setPower(lR);
+        robot.Drive3.setPower(rR);
     }
 
     /*

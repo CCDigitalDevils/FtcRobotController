@@ -29,8 +29,8 @@
 
 package edu.cc.ftc.HardwareCC;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -54,13 +54,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Hardware1
 {
     /* Public OpMode members. */
+    public DcMotor Drive0 = null;
     public DcMotor Drive1 = null;
     public DcMotor Drive2 = null;
     public DcMotor Drive3 = null;
-    public DcMotor Drive4 = null;
 
     public Servo    Servo2    = null;
     public Servo    Servo1   = null;
+
+    public BNO055IMU imu = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -81,26 +83,35 @@ public class Hardware1
         hwMap = ahwMap;
 
         // Define and Initialize Motors
+        Drive0 = hwMap.get(DcMotor.class, "C.M.0");
         Drive1 = hwMap.get(DcMotor.class, "C.M.1");
         Drive2 = hwMap.get(DcMotor.class, "C.M.2");
         Drive3 = hwMap.get(DcMotor.class, "C.M.3");
-        Drive4 = hwMap.get(DcMotor.class, "C.M.4");
-        Drive1.setDirection(DcMotor.Direction.FORWARD);
-        Drive2.setDirection(DcMotor.Direction.REVERSE);
-        Drive3.setDirection(DcMotor.Direction.FORWARD);
-        Drive4.setDirection(DcMotor.Direction.REVERSE);
+        Drive0.setDirection(DcMotor.Direction.FORWARD);
+        Drive1.setDirection(DcMotor.Direction.REVERSE);
+        Drive2.setDirection(DcMotor.Direction.FORWARD);
+        Drive3.setDirection(DcMotor.Direction.REVERSE);
+
+        imu = hwMap.get(BNO055IMU.class, "imu 1");
+        BNO055IMU.Parameters parameters= new BNO055IMU.Parameters();
+        parameters.mode  =  BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+        imu.initialize(parameters);
+
 
         // Set all motors to zero power
+        Drive0.setPower(0);
         Drive1.setPower(0);
         Drive2.setPower(0);
         Drive3.setPower(0);
-        Drive4.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
+        Drive0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Drive1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Drive2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Drive3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         Servo1 = hwMap.get(Servo.class, "C.S.0");
