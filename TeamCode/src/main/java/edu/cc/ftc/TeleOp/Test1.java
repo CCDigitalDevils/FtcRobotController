@@ -31,9 +31,11 @@ package edu.cc.ftc.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.RPM;
+import edu.cc.ftc.Utilities.STATE;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
@@ -75,7 +77,7 @@ public class Test1 extends OpMode{
     private double correction;
     private double speed;
     private double i;
-
+    private double maintain;
     private double timeI;
     private double timeF;
     private double time;
@@ -83,6 +85,8 @@ public class Test1 extends OpMode{
     private double encoderF;
     private double encoder;
     private double TPC;
+    STATE launcher = STATE.OFF;
+    STATE buttonA = STATE.OFF;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -93,7 +97,8 @@ public class Test1 extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = 1;
+        correction = .54;
+        maintain = 5;
 
 
         // Send telemetry message to signify robot waiting;
@@ -142,9 +147,29 @@ public class Test1 extends OpMode{
 
 
  */
-        spin = gamepad1.right_trigger;
+        if (gamepad1.a && launcher == STATE.OFF && buttonA == STATE.OFF){
+            buttonA = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.a &&buttonA == STATE.INPROGRESS && launcher == STATE.OFF ){
+            launcher = STATE.ON;
+            buttonA = STATE.OFF;
+        }
+        if (gamepad1.a && launcher == STATE.ON && buttonA == STATE.OFF){
+            buttonA = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.a && buttonA == STATE.INPROGRESS && launcher == STATE.ON){
+            launcher = STATE.OFF;
+            buttonA = STATE.OFF;
+        }
+
+        if (launcher == STATE.ON){
+            speed = correction;
+        }
+        else{
+            speed = 0;
+        }
         pos = robot.Drive0.getCurrentPosition();
-        speed = spin * correction;
+
 
 
         robot.Drive0.setPower(speed);
@@ -158,23 +183,24 @@ public class Test1 extends OpMode{
         encoderI = encoderF;
         telemetry.addData("Ticks per code cycle = ", encoder);
 
-        if (spin == 1 && encoder > 5){
-            correction = correction - .001;
-            telemetry.addData("up", 0);
+        if (launcher == STATE.ON && encoder > maintain + 1){
+            correction = correction - .0005;
         }
 
-        if (spin == 1 && encoder < 5 && i >= 250){
-            correction = correction + .01;
-            telemetry.addData("down", 0);
+        if (launcher == STATE.ON && encoder < maintain - 1 && i > 500){
+            correction = correction + .0005;
         }
-        if (spin == 1 && encoder < 5){
+
+        if (launcher == STATE.ON){
             i++;
         }
-
-        if (spin == 1 && encoder == 5){
+        else{
             i = 0;
         }
+
         telemetry.addData("correction = ", correction);
+
+        correction = Range.clip(correction, 0, 1);
     }
 
     /*
