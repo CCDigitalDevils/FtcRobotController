@@ -58,9 +58,15 @@ public class Hardware1
     public DcMotor Drive1 = null;
     public DcMotor Drive2 = null;
     public DcMotor Drive3 = null;
+    public DcMotor Drive4 = null;
+    public DcMotor Drive5 = null;
+    public DcMotor Drive6 = null;
+    public DcMotor Drive7 = null;
 
-    public Servo    Servo2    = null;
-    public Servo    Servo1   = null;
+    public Servo Servo0 = null;
+    public Servo Servo1 = null;
+    public Servo Servo2 = null;
+    public Servo Servo3 = null;
 
     public BNO055IMU imu = null;
 
@@ -87,10 +93,19 @@ public class Hardware1
         Drive1 = hwMap.get(DcMotor.class, "C.M.1");
         Drive2 = hwMap.get(DcMotor.class, "C.M.2");
         Drive3 = hwMap.get(DcMotor.class, "C.M.3");
+        Drive4 = hwMap.get(DcMotor.class, "E.M.0");
+        Drive5 = hwMap.get(DcMotor.class, "E.M.1");
+        Drive6 = hwMap.get(DcMotor.class, "E.M.2");
+        Drive7 = hwMap.get(DcMotor.class, "E.M.3");
+
         Drive0.setDirection(DcMotor.Direction.FORWARD);
         Drive1.setDirection(DcMotor.Direction.REVERSE);
         Drive2.setDirection(DcMotor.Direction.FORWARD);
         Drive3.setDirection(DcMotor.Direction.REVERSE);
+        Drive4.setDirection(DcMotor.Direction.FORWARD);
+        Drive5.setDirection(DcMotor.Direction.FORWARD);
+        Drive6.setDirection(DcMotor.Direction.FORWARD);
+        Drive7.setDirection(DcMotor.Direction.FORWARD);
 
         imu = hwMap.get(BNO055IMU.class, "imu 1");
         BNO055IMU.Parameters parameters= new BNO055IMU.Parameters();
@@ -106,19 +121,33 @@ public class Hardware1
         Drive1.setPower(0);
         Drive2.setPower(0);
         Drive3.setPower(0);
+        Drive4.setPower(0);
+        Drive5.setPower(0);
+        Drive6.setPower(0);
+        Drive7.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         Drive0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Drive1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Drive2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Drive3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Drive4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Drive5.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Drive6.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Drive7.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
-        Servo1 = hwMap.get(Servo.class, "C.S.0");
-        Servo2 = hwMap.get(Servo.class, "C.S.1");
+        Servo0 = hwMap.get(Servo.class, "C.S.0");
+        Servo1 = hwMap.get(Servo.class, "E.S.0");
+        Servo2 = hwMap.get(Servo.class, "E.S.1");
+        Servo3 = hwMap.get(Servo.class, "E.S.2");
 
-        Servo1.setPosition(MID_SERVO);
-        Servo2.setPosition(MID_SERVO);
+        Servo0.setPosition(.75);
+        Servo1.setPosition(0);
+        Servo2.setPosition(1);
+        Servo3.setPosition(.75);
+
     }
  }
 

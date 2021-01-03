@@ -37,8 +37,6 @@ import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.RPM;
 import edu.cc.ftc.Utilities.STATE;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 /**
  * This file provides basic Telop driving for a Pushbot robot.
  * The code is structured as an Iterative OpMode
@@ -60,23 +58,29 @@ public class Test1 extends OpMode{
 
     /* Declare OpMode members. */
     Hardware1 robot = new Hardware1(); // use the class created to define a Pushbot's hardware
-    RPM rpm = new RPM();
-    double          clawOffset  = 0.0 ;                  // Servo mid position
-    final double    CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
+    private RPM rpm;
 
     private double drive;
     private double strafe;
     private double turn;
+    private double drive1;
+    private double strafe1;
+    private double turn1;
+    private double drive2;
+    private double strafe2;
+    private double turn2;
     private double lF;
     private double rF;
     private double lR;
     private double rR;
     private double spin;
     private double pos;
+    private double pushOut;
 
     private double correction;
     private double speed;
     private double i;
+    private double j;
     private double maintain;
     private double timeI;
     private double timeF;
@@ -85,8 +89,25 @@ public class Test1 extends OpMode{
     private double encoderF;
     private double encoder;
     private double TPC;
+    private double liftmid;
+    private double lifttop;
+    private double wobblepos;
+
+
+    STATE buttonB = STATE.OFF;
+    STATE loader = STATE.OFF;
     STATE launcher = STATE.OFF;
-    STATE buttonA = STATE.OFF;
+    STATE buttonA2 = STATE.OFF;
+    STATE buttonA1 = STATE.OFF;
+    STATE pusher = STATE.OFF;
+    STATE trigger2 = STATE.OFF;
+    STATE bumperR = STATE.OFF;
+    STATE grab = STATE.OFF;
+    STATE midlift = STATE.OFF;
+    STATE toplift = STATE.OFF;
+    STATE buttonX1 = STATE.OFF;
+    STATE buttonB1 = STATE.OFF;
+    STATE wobble = STATE.DOWN;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -97,8 +118,13 @@ public class Test1 extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = .54;
-        maintain = 5;
+        correction = .90;
+        maintain = 13;
+        pushOut = 1;
+        liftmid = .23;
+        lifttop = .65;
+
+        robot.Servo1.setPosition(-1);
 
 
         // Send telemetry message to signify robot waiting;
@@ -110,6 +136,7 @@ public class Test1 extends OpMode{
      */
     @Override
     public void init_loop() {
+        rpm = new RPM(robot, 5.0);
     }
 
     /*
@@ -117,7 +144,7 @@ public class Test1 extends OpMode{
      */
     @Override
     public void start() {
-        encoderI = robot.Drive0.getCurrentPosition();
+        encoderI = robot.Drive4.getCurrentPosition();
     }
 
     /*
@@ -125,10 +152,18 @@ public class Test1 extends OpMode{
      */
     @Override
     public void loop() {
-/*
-        drive  = -gamepad1.left_stick_y;
-        strafe = gamepad1.left_stick_x;
-        turn   = gamepad1.right_stick_x;
+
+        drive1  = gamepad1.left_stick_y;
+        strafe1 = gamepad1.left_stick_x;
+        turn1   = -gamepad1.right_stick_x;
+
+        drive2  = -gamepad2.left_stick_y;
+        strafe2 = -gamepad2.left_stick_x;
+        turn2   = -gamepad2.right_stick_x;
+
+        drive = drive1 + drive2;
+        strafe = strafe1 + strafe2;
+        turn = turn1 + turn2;
 
         lR = ((-strafe + drive) + turn);
         rR = ((strafe  + drive) - turn);
@@ -140,27 +175,139 @@ public class Test1 extends OpMode{
         lF = Range.clip(lF, -1, 1);
         rF = Range.clip(rF, -1, 1);
 
-        robot.Drive1.setPower(lF);
-        robot.Drive2.setPower(rF);
-        robot.Drive3.setPower(lR);
-        robot.Drive4.setPower(rR);
+        robot.Drive0.setPower(lF);
+        robot.Drive1.setPower(rF);
+        robot.Drive2.setPower(lR);
+        robot.Drive3.setPower(rR);
 
 
- */
-        if (gamepad1.a && launcher == STATE.OFF && buttonA == STATE.OFF){
-            buttonA = STATE.INPROGRESS;
+
+
+        if(gamepad1.right_bumper ){
+            robot.Drive5.setPower(1);
         }
-        else if (!gamepad1.a &&buttonA == STATE.INPROGRESS && launcher == STATE.OFF ){
+        else if (gamepad1.left_bumper){
+            robot.Drive5.setPower(-1);
+        }
+        else{
+            robot.Drive5.setPower(0);
+        }
+
+        if (gamepad2.a && launcher == STATE.OFF && buttonA2 == STATE.OFF){
+            buttonA2 = STATE.INPROGRESS;
+        }
+        else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.OFF ){
             launcher = STATE.ON;
-            buttonA = STATE.OFF;
+            buttonA2 = STATE.OFF;
         }
-        if (gamepad1.a && launcher == STATE.ON && buttonA == STATE.OFF){
-            buttonA = STATE.INPROGRESS;
+        if (gamepad2.a && launcher == STATE.ON && buttonA2 == STATE.OFF){
+            buttonA2 = STATE.INPROGRESS;
         }
-        else if (!gamepad1.a && buttonA == STATE.INPROGRESS && launcher == STATE.ON){
+        else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.ON){
             launcher = STATE.OFF;
-            buttonA = STATE.OFF;
+            buttonA2 = STATE.OFF;
         }
+
+        if (gamepad2.right_trigger > .25 && pusher == STATE.OFF && trigger2 == STATE.OFF){
+            trigger2 = STATE.INPROGRESS;
+        }
+        else if (gamepad2.right_trigger < .25 && trigger2 == STATE.INPROGRESS && pusher == STATE.OFF ){
+            pusher = STATE.ON;
+            trigger2 = STATE.OFF;
+            robot.Servo0.setPosition(1);
+        }
+        else if(pusher == STATE.ON && robot.Servo0.getPosition() == 1 && j >= 75){
+            pusher = STATE.OFF;
+            robot.Servo0.setPosition(.75);
+            j = 0;
+        }
+        else if(pusher == STATE.ON && robot.Servo0.getPosition() == 1){
+            j++;
+        }
+
+        if (gamepad1.a && grab == STATE.OFF && buttonA1 == STATE.OFF){
+            buttonA1 = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.OFF ){
+            grab = STATE.ON;
+            buttonA1 = STATE.OFF;
+            robot.Servo3.setPosition(1);
+        }
+        if (gamepad1.a && grab == STATE.ON && buttonA1 == STATE.OFF){
+            buttonA1 = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.ON){
+            grab = STATE.OFF;
+            buttonA1 = STATE.OFF;
+            robot.Servo3.setPosition(.75);
+        }
+
+        if (gamepad1.x && buttonX1 == STATE.OFF){
+            buttonX1 = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.x && buttonX1 == STATE.INPROGRESS && wobble == STATE.MID){
+            wobble = STATE.DOWN;
+            buttonX1 = STATE.OFF;
+            wobblepos = 0;
+        }
+        else if (!gamepad1.x && buttonX1 == STATE.INPROGRESS){
+            wobble = STATE.MID;
+            buttonX1 = STATE.OFF;
+            wobblepos = liftmid;
+        }
+
+        if (gamepad1.b && wobble == STATE.MID && buttonB1 == STATE.OFF){
+            buttonB1 = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && wobble == STATE.MID ){
+            wobble = STATE.UP;
+            buttonB1 = STATE.OFF;
+            wobblepos = lifttop;
+        }
+        if (gamepad1.b && wobble == STATE.UP && buttonB1 == STATE.OFF){
+            buttonB1 = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && wobble == STATE.UP){
+            wobble = STATE.MID;
+            buttonB1 = STATE.OFF;
+            wobblepos = liftmid;
+        }
+
+
+        telemetry.addData("pusher", pusher);
+        telemetry.addData("buttonX", trigger2);
+        telemetry.addData("push pos", robot.Servo0.getPosition() );
+
+        pos = robot.Drive4.getCurrentPosition();
+
+        telemetry.addData("spin speed", spin);
+        telemetry.addData("position", pos);
+
+        encoderF = robot.Drive4.getCurrentPosition();
+        encoder = encoderF - encoderI;
+        telemetry.addData("Ticks encoderI = ", encoderI);
+        encoderI = encoderF;
+        telemetry.addData("Ticks encoderF = ", encoderF);
+
+
+        telemetry.addData("Ticks per code cycle = ", encoder);
+/*
+        if (launcher == STATE.ON && encoder > maintain + 1){
+            correction = correction - .0005;
+        }
+        if (launcher == STATE.ON && encoder < maintain - 1 && i > 500){
+            correction = correction + .0005;
+        }
+        if (launcher == STATE.ON){
+            i++;
+        }
+        else{
+            i = 0;
+        }
+*/
+        telemetry.addData("correction = ", correction);
+
+        correction = Range.clip(correction, 0, 1);
 
         if (launcher == STATE.ON){
             speed = correction;
@@ -168,39 +315,17 @@ public class Test1 extends OpMode{
         else{
             speed = 0;
         }
-        pos = robot.Drive0.getCurrentPosition();
+
+        robot.Drive4.setPower(speed);
+        robot.Servo1.setPosition(wobblepos);
+        robot.Servo2.setPosition(1 - wobblepos);
 
 
 
-        robot.Drive0.setPower(speed);
-        robot.Drive1.setPower(speed);
 
-        telemetry.addData("spin speed", spin);
-        telemetry.addData("position", pos);
 
-        encoderF = robot.Drive0.getCurrentPosition();
-        encoder = encoderF - encoderI;
-        encoderI = encoderF;
-        telemetry.addData("Ticks per code cycle = ", encoder);
 
-        if (launcher == STATE.ON && encoder > maintain + 1){
-            correction = correction - .0005;
-        }
 
-        if (launcher == STATE.ON && encoder < maintain - 1 && i > 500){
-            correction = correction + .0005;
-        }
-
-        if (launcher == STATE.ON){
-            i++;
-        }
-        else{
-            i = 0;
-        }
-
-        telemetry.addData("correction = ", correction);
-
-        correction = Range.clip(correction, 0, 1);
     }
 
     /*
