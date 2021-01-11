@@ -52,9 +52,9 @@ import edu.cc.ftc.Utilities.STATE;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test1", group="Test")
+@TeleOp(name="Drive Main", group="TeleOp")
 //@Disabled
-public class Test1 extends OpMode{
+public class DriveMain extends OpMode{
 
     /* Declare OpMode members. */
     Hardware1 robot = new Hardware1(); // use the class created to define a Pushbot's hardware
@@ -154,11 +154,11 @@ public class Test1 extends OpMode{
     public void loop() {
 
         drive1  = gamepad1.left_stick_y;
-        strafe1 = gamepad1.left_stick_x;
+        strafe1 = -gamepad1.left_stick_x;
         turn1   = -gamepad1.right_stick_x;
 
         drive2  = -gamepad2.left_stick_y;
-        strafe2 = -gamepad2.left_stick_x;
+        strafe2 = gamepad2.left_stick_x;
         turn2   = -gamepad2.right_stick_x;
 
         drive = drive1 + drive2;
