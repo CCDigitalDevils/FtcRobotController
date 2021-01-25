@@ -35,6 +35,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 /**
  * This is NOT an opmode.
  *
@@ -69,6 +73,9 @@ public class Hardware1
     public Servo Servo3 = null;
 
     public BNO055IMU imu = null;
+
+    public WebcamName Webcam1 = null;
+    public int tfodMonitorViewId = 0;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -115,6 +122,9 @@ public class Hardware1
         parameters.loggingEnabled = false;
         imu.initialize(parameters);
 
+        Webcam1 = hwMap.get(WebcamName.class, "Webcam 1");
+        tfodMonitorViewId = hwMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hwMap.appContext.getPackageName());
 
 
         // Set all motors to zero power
@@ -139,10 +149,10 @@ public class Hardware1
         Drive7.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
-        Servo0 = hwMap.get(Servo.class, "C.S.0");
-        Servo1 = hwMap.get(Servo.class, "E.S.0");
-        Servo2 = hwMap.get(Servo.class, "E.S.1");
-        Servo3 = hwMap.get(Servo.class, "E.S.2");
+        Servo0 = hwMap.get(Servo.class, "E.S.0");
+        Servo1 = hwMap.get(Servo.class, "E.S.1");
+        Servo2 = hwMap.get(Servo.class, "E.S.2");
+        Servo3 = hwMap.get(Servo.class, "E.S.3");
 
         Servo0.setPosition(.75);
         Servo1.setPosition(0);

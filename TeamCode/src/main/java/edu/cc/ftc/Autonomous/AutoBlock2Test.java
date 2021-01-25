@@ -57,7 +57,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Block 2 Test", group="Blue")
+@Autonomous(name="Auto Block 2 Test", group="Blue Test")
 //@Disabled
 public class AutoBlock2Test extends LinearOpMode {
 

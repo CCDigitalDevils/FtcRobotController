@@ -58,9 +58,9 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Test 1", group="Either")
+@Autonomous(name="Auto Powershot Blue Test", group="Blue")
 //@Disabled
-public class AutoTest1 extends LinearOpMode {
+public class AutoPowershotBlueTest extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware

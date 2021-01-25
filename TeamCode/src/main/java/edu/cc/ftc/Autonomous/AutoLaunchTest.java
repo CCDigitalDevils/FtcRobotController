@@ -57,7 +57,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Launch Test", group="Either")
+@Autonomous(name="Launch Test", group="Test")
 //@Disabled
 public class AutoLaunchTest extends LinearOpMode {
 
@@ -82,7 +82,7 @@ public class AutoLaunchTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.80);
+        au.laucherStart(.77);
         au.pause(1.5);
         au.shoot();
         au.jiggle();

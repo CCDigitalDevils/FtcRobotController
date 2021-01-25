@@ -58,7 +58,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Move Test", group="Either")
+@Autonomous(name="Move Test", group="Test")
 //@Disabled
 public class AutoMoveTest extends LinearOpMode {
 

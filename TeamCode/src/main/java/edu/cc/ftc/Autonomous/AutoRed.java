@@ -36,6 +36,7 @@ import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.AutoEncoder;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
+import edu.cc.ftc.Utilities.WebcamUtilities;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -58,9 +59,9 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Block 3 Test", group="Blue Test")
+@Autonomous(name="Auto Red", group="Red")
 //@Disabled
-public class AutoBlock3Test extends LinearOpMode {
+public class AutoRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
@@ -69,6 +70,7 @@ public class AutoBlock3Test extends LinearOpMode {
     private AutonomousUtilities au;
     private GyroUtilities gu;
     private AutoEncoder ae;
+    private WebcamUtilities wu;
 
     @Override
     public void runOpMode() {
@@ -80,9 +82,47 @@ public class AutoBlock3Test extends LinearOpMode {
         au = new AutonomousUtilities(robot, this, runtime);
         gu = new GyroUtilities(robot, this, runtime);
         ae = new AutoEncoder(robot,this,runtime);
+        wu = new WebcamUtilities(robot, this, runtime);
+
+        wu.startCamera();
+        telemetry.addData(">", "Ready");
+        telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        ae.encoderDrive(.75, 126);
+        String label = wu.idk();
+        telemetry.addData(">", label);
+
+        //Shoot 3 discs
+        au.laucherStart(.77);
+        au.pause(1.5);
+        au.shoot();
+        au.jiggle();
+        au.shoot();
+        au.jiggle();
+        au.shoot();
+        au.jiggle();
+        au.shoot();
+        au.launcherStop();
+        au.pause(1);
+
+        //Take path based on ring stack
+        if(label == "Single"){
+            telemetry.addData(">", "Single");
+            telemetry.update();
+            au.strafeTime(.75, 270, 1);
+            ae.encoderDrive(.75, 100);
+        }
+        else if(label == "Quad"){
+            telemetry.addData(">", "Quad");
+            telemetry.update();
+            ae.encoderDrive(.75, 126);
+        }
+        else{
+            telemetry.addData(">", "null");
+            telemetry.update();
+            ae.encoderDrive(.75, 75);
+        }
+
 }
 }

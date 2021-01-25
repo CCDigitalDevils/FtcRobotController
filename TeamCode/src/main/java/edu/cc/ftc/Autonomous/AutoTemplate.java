@@ -67,6 +67,7 @@ public class AutoTemplate extends LinearOpMode {
     private AutonomousUtilities au;
     private GyroUtilities gu;
     private AutoEncoder ae;
+    private WebcamUtilities wu;
 
     @Override
     public void runOpMode() {
@@ -78,6 +79,7 @@ public class AutoTemplate extends LinearOpMode {
         au = new AutonomousUtilities(robot, this, runtime);
         gu = new GyroUtilities(robot, this, runtime);
         ae = new AutoEncoder(robot,this,runtime);
+        wu = new WebcamUtilities(robot, this, runtime);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

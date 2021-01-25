@@ -63,7 +63,7 @@ public class AutonomousUtilities {
         robot.Drive1.setPower(0);
         robot.Drive2.setPower(0);
         robot.Drive3.setPower(0);
-        pause(1);
+        pause(.5);
     }
 
     public void stopMotors() {
@@ -147,23 +147,33 @@ public class AutonomousUtilities {
 
 
     public void pause() {
-        try {
+        /*try {
             Thread.sleep(200);
         } catch (Exception e) {
             e.printStackTrace();
         }
+         */
+        long goal = System.currentTimeMillis() + 200;
+        while(System.currentTimeMillis() < goal){};
     }
 
     public void pause(double times) {
-        for (int i = 0; i < (times * 10); i++) {
-            try {
+        //for (int i = 0; i < (times * 10); i++) {
+            /*try {
                 Thread.sleep(100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             linearOpMode.telemetry.addData("time left = ", times - i / 10);
-            linearOpMode.telemetry.update();
-        }
+             */
+            times *= 1000;
+            long goal = System.currentTimeMillis() + ((long)times );
+            while(System.currentTimeMillis() < goal && linearOpMode.opModeIsActive()){
+                linearOpMode.telemetry.addData("time left = ", goal - System.currentTimeMillis());
+                linearOpMode.telemetry.update();
+            }
+
+        //}
 
     }
 }
