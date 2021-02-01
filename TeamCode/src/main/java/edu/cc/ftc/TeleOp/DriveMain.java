@@ -118,10 +118,10 @@ public class DriveMain extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = .90;
+        correction = .80;
         maintain = 13;
         pushOut = 1;
-        liftmid = .23;
+        liftmid = .25;
         lifttop = .65;
 
         robot.Servo1.setPosition(-1);
@@ -161,6 +161,13 @@ public class DriveMain extends OpMode{
         strafe2 = gamepad2.left_stick_x;
         turn2   = -gamepad2.right_stick_x;
 
+        if(gamepad2.left_bumper){turn2 = .25;}
+        else if(gamepad2.right_bumper){turn2 = -.25;}
+
+        drive2 *= .60;
+        strafe2 *= .60;
+        turn2 *= .60;
+
         drive = drive1 + drive2;
         strafe = strafe1 + strafe2;
         turn = turn1 + turn2;
@@ -182,17 +189,20 @@ public class DriveMain extends OpMode{
 
 
 
-
-        if(gamepad1.right_bumper ){
+        //Loading controls
+        if(gamepad1.right_trigger >= .10 ){
             robot.Drive5.setPower(1);
         }
-        else if (gamepad1.left_bumper){
+        else if (gamepad1.left_trigger >= .10){
             robot.Drive5.setPower(-1);
         }
         else{
             robot.Drive5.setPower(0);
         }
 
+
+
+        // launcher on off controls
         if (gamepad2.a && launcher == STATE.OFF && buttonA2 == STATE.OFF){
             buttonA2 = STATE.INPROGRESS;
         }
@@ -208,6 +218,8 @@ public class DriveMain extends OpMode{
             buttonA2 = STATE.OFF;
         }
 
+
+        //Shooting trigger controls
         if (gamepad2.right_trigger > .25 && pusher == STATE.OFF && trigger2 == STATE.OFF){
             trigger2 = STATE.INPROGRESS;
         }
@@ -225,6 +237,8 @@ public class DriveMain extends OpMode{
             j++;
         }
 
+
+        //Close wobble grabber
         if (gamepad1.a && grab == STATE.OFF && buttonA1 == STATE.OFF){
             buttonA1 = STATE.INPROGRESS;
         }
@@ -242,6 +256,9 @@ public class DriveMain extends OpMode{
             robot.Servo3.setPosition(.75);
         }
 
+
+        // Move wobble lifter to mid if up or down
+        // Move wobble lifter to down if mid
         if (gamepad1.x && buttonX1 == STATE.OFF){
             buttonX1 = STATE.INPROGRESS;
         }
@@ -256,6 +273,9 @@ public class DriveMain extends OpMode{
             wobblepos = liftmid;
         }
 
+
+        // Move wobble lifter to up if mid
+        // Move wobble lifter to mid if up
         if (gamepad1.b && wobble == STATE.MID && buttonB1 == STATE.OFF){
             buttonB1 = STATE.INPROGRESS;
         }

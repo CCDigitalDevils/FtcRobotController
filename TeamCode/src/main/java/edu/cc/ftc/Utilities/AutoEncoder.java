@@ -38,14 +38,14 @@ public class AutoEncoder {
             robot.Drive3.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.Drive3.getCurrentPosition() + (int) (Inches * COUNTS_PER_INCH);
-            newRightTarget = robot.Drive2.getCurrentPosition() + (int) (Inches * COUNTS_PER_INCH);
-            robot.Drive3.setTargetPosition(newLeftTarget);
-            robot.Drive2.setTargetPosition(newRightTarget);
+            newLeftTarget = robot.Drive1.getCurrentPosition() + (int) (Inches * COUNTS_PER_INCH);
+            newRightTarget = robot.Drive0.getCurrentPosition() + (int) (Inches * COUNTS_PER_INCH);
+            robot.Drive1.setTargetPosition(newLeftTarget);
+            robot.Drive0.setTargetPosition(newRightTarget);
 
             // Turn On RUN_TO_POSITION
-            robot.Drive3.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.Drive2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.Drive1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.Drive0.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             robot.Drive0.setPower(speed);
@@ -54,13 +54,13 @@ public class AutoEncoder {
             robot.Drive3.setPower(speed);
 
             while (linearOpMode.opModeIsActive() &&
-                    (robot.Drive3.isBusy() && robot.Drive2.isBusy())) {
+                    (robot.Drive1.isBusy() && robot.Drive0.isBusy())) {
 
                 // Display it for the driver.
                 linearOpMode.telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 linearOpMode.telemetry.addData("Path2",  "Running at %7d :%7d",
-                        robot.Drive3.getCurrentPosition(),
-                        robot.Drive2.getCurrentPosition());
+                        robot.Drive1.getCurrentPosition(),
+                        robot.Drive0.getCurrentPosition());
                 linearOpMode.telemetry.update();
             }
 
@@ -72,8 +72,8 @@ public class AutoEncoder {
 
 
             // Turn off RUN_TO_POSITION
-            robot.Drive3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            robot.Drive2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.Drive1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.Drive0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
 }

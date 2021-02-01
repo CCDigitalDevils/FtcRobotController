@@ -17,8 +17,6 @@ public class AutonomousUtilities {
         this.runtime = runtime;
     }
 
-    private double liftpower;
-
     private void strafe(double speed, double angle) {
         angle = angle + 45;
         double lFrR = Math.sin(Math.toRadians(angle)) * speed;
@@ -45,9 +43,9 @@ public class AutonomousUtilities {
 
     public void shoot(){
         robot.Servo0.setPosition(1);
-        pause(.5);
+        pause(.4);
         robot.Servo0.setPosition(.75);
-        pause(.5);
+        pause(.4);
     }
 
     public void jiggle(){
@@ -63,7 +61,32 @@ public class AutonomousUtilities {
         robot.Drive1.setPower(0);
         robot.Drive2.setPower(0);
         robot.Drive3.setPower(0);
-        pause(.5);
+    }
+
+    public void wobblepos(STATE pos){
+        double wpos = 0;
+        if (pos == STATE.MID){
+            wpos = .25;
+        }
+        else if (pos == STATE.BOTTOM){
+            wpos = 0;
+        }
+        else if (pos == STATE.RAISED){
+            wpos = .35;
+        }
+        robot.Servo1.setPosition(wpos);
+        robot.Servo2.setPosition(1 - wpos);
+    }
+
+    public void wobblegrab(STATE pos){
+        double gpos = .75;
+        if (pos == STATE.OPEN){
+            gpos = .75;
+        }
+        else if (pos == STATE.CLOSED){
+            gpos = 1;
+        }
+        robot.Servo3.setPosition(gpos);
     }
 
     public void stopMotors() {
@@ -129,51 +152,17 @@ public class AutonomousUtilities {
         }
     }
 
-    public void strafeTime(double speed, double angle, double time, STATE state, double liftTime) {
-        liftpower = (liftTime / time) * .5;
-        runtime.reset();
-        while (linearOpMode.opModeIsActive() && (runtime.seconds() < time)) {
-            strafe(speed, angle);
-            if (state == STATE.UP) {
-                robot.Drive4.setPower(liftpower);
-            } else if (state == STATE.DOWN) {
-                robot.Drive4.setPower(-liftpower);
-            }
-            linearOpMode.telemetry.addData("Path", "Leg: %.2f S Elapsed", runtime.seconds());
-            linearOpMode.telemetry.update();
-        }
-        stopMotors();
-    }
-
-
     public void pause() {
-        /*try {
-            Thread.sleep(200);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-         */
         long goal = System.currentTimeMillis() + 200;
         while(System.currentTimeMillis() < goal){};
     }
 
     public void pause(double times) {
-        //for (int i = 0; i < (times * 10); i++) {
-            /*try {
-                Thread.sleep(100);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            linearOpMode.telemetry.addData("time left = ", times - i / 10);
-             */
             times *= 1000;
             long goal = System.currentTimeMillis() + ((long)times );
             while(System.currentTimeMillis() < goal && linearOpMode.opModeIsActive()){
                 linearOpMode.telemetry.addData("time left = ", goal - System.currentTimeMillis());
                 linearOpMode.telemetry.update();
             }
-
-        //}
-
     }
 }

@@ -42,7 +42,6 @@ import static edu.cc.ftc.Utilities.STATE.CLOSED;
 import static edu.cc.ftc.Utilities.STATE.DOWN;
 import static edu.cc.ftc.Utilities.STATE.MID;
 import static edu.cc.ftc.Utilities.STATE.OPEN;
-import static edu.cc.ftc.Utilities.STATE.RAISED;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -65,9 +64,9 @@ import static edu.cc.ftc.Utilities.STATE.RAISED;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Red", group="Red")
+@Autonomous(name="Auto Test", group="Test")
 //@Disabled
-public class AutoRed extends LinearOpMode {
+public class AutoTest extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
@@ -90,67 +89,18 @@ public class AutoRed extends LinearOpMode {
         ae = new AutoEncoder(robot,this,runtime);
         wu = new WebcamUtilities(robot, this, runtime);
 
-        wu.startCamera();
-        telemetry.addData(">", "Ready");
-        telemetry.update();
-
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        String label = wu.idk();
-        telemetry.addData(">", label);
-        au.laucherStart(.73);
+        gu.gyroTurn(.5, 90);
+        au.pause(1);
+        gu.gyroTurn(.5, 180);
+        au.pause(1);
+        gu.gyroTurn(.5, 270);
+        au.pause(1);
+        gu.gyroTurn(.5, 0);
+        au.pause(1);
 
-        au.wobblepos(MID);
-        au.pause(.5);
-        au.wobblegrab(CLOSED);
-        au.pause(.5);
-        au.wobblepos(RAISED);
 
-        //Shoot 3 discs
-
-        au.pause(.5);
-        au.shoot();
-        //au.jiggle();
-        au.pause(.5);
-        au.shoot();
-        //au.jiggle();
-        au.pause(.5);
-        au.shoot();
-        //au.jiggle();
-        au.pause(.5);
-        au.shoot();
-        au.launcherStop();
-
-        //Take path based on ring stack
-        if(label == "Single"){
-            telemetry.addData(">", "Single");
-            telemetry.update();
-            ae.encoderDrive(.75, 100);
-            au.wobblegrab(OPEN);
-            au.wobblepos(DOWN);
-        }
-        else if(label == "Quad"){
-            telemetry.addData(">", "Quad");
-            telemetry.update();
-            ae.encoderDrive(.75, 126);
-            gu.gyroTurn(.5, 180);
-            au.wobblegrab(OPEN);
-            au.wobblepos(DOWN);
-        }
-        else{
-            telemetry.addData(">", "null");
-            telemetry.update();
-            ae.encoderDrive(.75, 75);
-            gu.gyroTurn(.5, -90);
-            au.pause(.2);
-            ae.encoderDrive(.75, 30);
-            au.wobblegrab(OPEN);
-            au.wobblepos(DOWN);
-            au.pause(.2);
-            gu.gyroTurn(.5, 270);
-            au.pause(.2);
-            ae.encoderDrive(-.75, -30);
-        }
 
 }
 }

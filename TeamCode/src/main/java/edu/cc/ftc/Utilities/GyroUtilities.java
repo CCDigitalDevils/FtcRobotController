@@ -37,7 +37,7 @@ public class GyroUtilities {
     static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
-    static final double     P_TURN_COEFF            = .05;     // Larger is more responsive, but also less stable
+    static final double     P_TURN_COEFF            = .1;     // Larger is more responsive, but also less stable
     static final double     P_DRIVE_COEFF           = 0.15;     // Larger is more responsive, but also less stable
 
     /**
@@ -54,8 +54,8 @@ public class GyroUtilities {
     public void gyroTurn ( double speed, double angle) {
         DcMotor.RunMode originalMode0 = robot.Drive0.getMode();
         DcMotor.RunMode originalMode1 = robot.Drive1.getMode();
-        robot.Drive0.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.Drive1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.Drive0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.Drive1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         gyroTurn(speed,angle,Long.MAX_VALUE);
         robot.Drive0.setMode(originalMode0);
         robot.Drive1.setMode(originalMode1);
@@ -139,10 +139,10 @@ public class GyroUtilities {
         }
 
         // Send desired speeds to motors.
-        robot.Drive0.setPower(leftSpeed);
-        robot.Drive2.setPower(leftSpeed);
-        robot.Drive1.setPower(rightSpeed);
-        robot.Drive3.setPower(rightSpeed);
+        robot.Drive1.setPower(leftSpeed);
+        robot.Drive3.setPower(leftSpeed);
+        robot.Drive0.setPower(rightSpeed);
+        robot.Drive2.setPower(rightSpeed);
 
         // Display it for the driver.
         linearOpMode.telemetry.addData("Target", "%5.2f", angle);

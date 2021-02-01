@@ -59,6 +59,10 @@ public class Drive_Test extends OpMode {
             strafe2 = gamepad2.left_stick_x;
             turn2 = -gamepad2.right_stick_x;
 
+            drive2 *= .60;
+            strafe2 *= .60;
+            turn2 *= .60;
+
             drive = drive1 + drive2;
             strafe = strafe1 + strafe2;
             turn = turn1 + turn2;
