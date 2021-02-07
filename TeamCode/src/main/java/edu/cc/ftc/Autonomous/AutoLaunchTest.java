@@ -36,6 +36,10 @@ import edu.cc.ftc.Utilities.AutoEncoder;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 
+import static edu.cc.ftc.Utilities.STATE.CLOSED;
+import static edu.cc.ftc.Utilities.STATE.MID;
+import static edu.cc.ftc.Utilities.STATE.RAISED;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -82,16 +86,13 @@ public class AutoLaunchTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.77);
+        au.laucherStart(.65);
         au.pause(1.5);
         au.shoot();
-        au.jiggle();
+        au.pause(.75);
         au.shoot();
-        au.jiggle();
-        au.shoot();
-        au.jiggle();
+        au.pause(.75);
         au.shoot();
         au.launcherStop();
-        au.pause(1);
     }
 }

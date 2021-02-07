@@ -108,6 +108,8 @@ public class DriveMain extends OpMode{
     STATE buttonX1 = STATE.OFF;
     STATE buttonB1 = STATE.OFF;
     STATE wobble = STATE.DOWN;
+    STATE buttonX2 = STATE.OFF;
+    STATE power = STATE.OFF;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -118,7 +120,7 @@ public class DriveMain extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = .80;
+        correction = .75;
         maintain = 13;
         pushOut = 1;
         liftmid = .25;
@@ -161,12 +163,20 @@ public class DriveMain extends OpMode{
         strafe2 = gamepad2.left_stick_x;
         turn2   = -gamepad2.right_stick_x;
 
-        if(gamepad2.left_bumper){turn2 = .25;}
-        else if(gamepad2.right_bumper){turn2 = -.25;}
+        if(gamepad2.left_bumper){turn2 = .35;}
+        else if(gamepad2.right_bumper){turn2 = -.35;}
+        if (gamepad2.dpad_down){drive2 = -.35;}
+        else if (gamepad2.dpad_up){drive2 = .35;}
+        if (gamepad2.dpad_left){strafe2 = -.45;}
+        else if (gamepad2.dpad_right){strafe2 = .45;}
 
-        drive2 *= .60;
-        strafe2 *= .60;
-        turn2 *= .60;
+        drive1 *= .75;
+        strafe1 *= .75;
+        turn2 *= .75;
+
+        drive2 *= .50;
+        strafe2 *= .50;
+        turn2 *= .50;
 
         drive = drive1 + drive2;
         strafe = strafe1 + strafe2;
@@ -190,7 +200,7 @@ public class DriveMain extends OpMode{
 
 
         //Loading controls
-        if(gamepad1.right_trigger >= .10 ){
+        if(gamepad1.right_trigger >= .10){
             robot.Drive5.setPower(1);
         }
         else if (gamepad1.left_trigger >= .10){
@@ -208,6 +218,7 @@ public class DriveMain extends OpMode{
         }
         else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.OFF ){
             launcher = STATE.ON;
+            power = STATE.OFF;
             buttonA2 = STATE.OFF;
         }
         if (gamepad2.a && launcher == STATE.ON && buttonA2 == STATE.OFF){
@@ -218,9 +229,27 @@ public class DriveMain extends OpMode{
             buttonA2 = STATE.OFF;
         }
 
+        if (gamepad2.x && power == STATE.OFF && buttonX2 == STATE.OFF){
+            buttonX2 = STATE.INPROGRESS;
+        }
+        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && power == STATE.OFF ){
+            launcher = STATE.OFF;
+            power = STATE.ON;
+            buttonX2 = STATE.OFF;
+        }
+        if (gamepad2.x && power == STATE.ON && buttonX2 == STATE.OFF){
+            buttonX2 = STATE.INPROGRESS;
+        }
+        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && power == STATE.ON){
+            power = STATE.OFF;
+            buttonX2 = STATE.OFF;
+        }
+
+
+
 
         //Shooting trigger controls
-        if (gamepad2.right_trigger > .25 && pusher == STATE.OFF && trigger2 == STATE.OFF){
+        if (gamepad2.right_trigger > .25 && pusher == STATE.OFF && trigger2 == STATE.OFF  && (launcher == STATE.ON || power == STATE.ON) ){
             trigger2 = STATE.INPROGRESS;
         }
         else if (gamepad2.right_trigger < .25 && trigger2 == STATE.INPROGRESS && pusher == STATE.OFF ){
@@ -329,8 +358,16 @@ public class DriveMain extends OpMode{
 
         correction = Range.clip(correction, 0, 1);
 
+        if(launcher == STATE.ON && power == STATE.ON){
+            power = STATE.OFF;
+            launcher = STATE.OFF;
+        }
+
         if (launcher == STATE.ON){
             speed = correction;
+        }
+        else if (power == STATE.ON){
+            speed = correction - .09;
         }
         else{
             speed = 0;

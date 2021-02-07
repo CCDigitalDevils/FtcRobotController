@@ -98,7 +98,7 @@ public class AutoRed extends LinearOpMode {
         waitForStart();
         String label = wu.idk();
         telemetry.addData(">", label);
-        au.laucherStart(.73);
+        au.laucherStart(.65);
 
         au.wobblepos(MID);
         au.pause(.5);
@@ -110,13 +110,8 @@ public class AutoRed extends LinearOpMode {
 
         au.pause(.5);
         au.shoot();
-        //au.jiggle();
         au.pause(.5);
         au.shoot();
-        //au.jiggle();
-        au.pause(.5);
-        au.shoot();
-        //au.jiggle();
         au.pause(.5);
         au.shoot();
         au.launcherStop();
@@ -125,31 +120,55 @@ public class AutoRed extends LinearOpMode {
         if(label == "Single"){
             telemetry.addData(">", "Single");
             telemetry.update();
-            ae.encoderDrive(.75, 100);
+            au.strafeTime(.5, -90, 1);
+            gu.gyroTurn(.5, 0, 1);
+            au.pause(.3);
+            ae.encoderDrive(.5, 100);
+            au.pause(.3);
+            gu.gyroTurn(.5, -90);
+            au.pause(.3);
+            ae.encoderDrive(.5, 17);
             au.wobblegrab(OPEN);
             au.wobblepos(DOWN);
+            au.pause(.3);
+            au.strafeTime(.5, 90, 1.5);
         }
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
             telemetry.update();
-            ae.encoderDrive(.75, 126);
-            gu.gyroTurn(.5, 180);
+            au.strafeTime(.5, -90, 1);
+            gu.gyroTurn(.5, 0, 1);
+            au.pause(.3);
+            ae.encoderDrive(.5, 126);
+            au.pause(.3);
+            gu.gyroTurn(.5, -90);
+            au.pause(.3);
+            ae.encoderDrive(.5, 48);
             au.wobblegrab(OPEN);
             au.wobblepos(DOWN);
+            au.pause(.3);
+            au.strafeTime(.5, 90, 1);
+            au.pause(.3);
+            gu.gyroTurn(.5, 180);
+            au.pause(.3);
+            ae.encoderDrive(.5, 27);
         }
         else{
             telemetry.addData(">", "null");
             telemetry.update();
-            ae.encoderDrive(.75, 75);
+            ae.encoderDrive(.5, 75);
+            au.pause(.3);
             gu.gyroTurn(.5, -90);
-            au.pause(.2);
-            ae.encoderDrive(.75, 30);
+            au.pause(.3);
+            ae.encoderDrive(.5, 35);
             au.wobblegrab(OPEN);
             au.wobblepos(DOWN);
-            au.pause(.2);
-            gu.gyroTurn(.5, 270);
-            au.pause(.2);
-            ae.encoderDrive(-.75, -30);
+            au.pause(.3);
+            gu.gyroTurn(.5, 270, 1);
+            au.pause(.3);
+            ae.encoderDrive(-.5, -35);
+            au.pause(.3);
+            au.strafeTime(.5,-90,.5);
         }
 
 }

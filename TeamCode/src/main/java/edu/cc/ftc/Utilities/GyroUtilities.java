@@ -61,7 +61,7 @@ public class GyroUtilities {
         robot.Drive1.setMode(originalMode1);
     }
 
-    public void gyroTurn ( double speed, double angle, Long time) {
+    public void gyroTurn ( double speed, double angle, double time) {
         Long startTime = System.currentTimeMillis();
         Long duration = 0l;
 
