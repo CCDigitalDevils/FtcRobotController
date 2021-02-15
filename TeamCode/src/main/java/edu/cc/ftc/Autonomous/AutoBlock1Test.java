@@ -59,7 +59,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  */
 
 @Autonomous(name="Auto Block 1 Test", group="Blue Test")
-//@Disabled
+@Disabled
 public class AutoBlock1Test extends LinearOpMode {
 
     /* Declare OpMode members. */

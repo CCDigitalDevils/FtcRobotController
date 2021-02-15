@@ -59,7 +59,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  */
 
 @Autonomous(name="Auto Powershot Blue Test", group="Blue")
-//@Disabled
+@Disabled
 public class AutoPowershotBlueTest extends LinearOpMode {
 
     /* Declare OpMode members. */

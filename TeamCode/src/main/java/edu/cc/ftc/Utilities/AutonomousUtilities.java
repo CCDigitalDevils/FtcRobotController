@@ -81,10 +81,10 @@ public class AutonomousUtilities {
     public void wobblegrab(STATE pos){
         double gpos = .75;
         if (pos == STATE.OPEN){
-            gpos = .75;
+            gpos = 0;
         }
         else if (pos == STATE.CLOSED){
-            gpos = 1;
+            gpos = .4;
         }
         robot.Servo3.setPosition(gpos);
     }

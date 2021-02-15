@@ -28,6 +28,7 @@ package edu.cc.ftc.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -62,7 +63,7 @@ import static edu.cc.ftc.Utilities.STATE.RAISED;
  */
 
 @Autonomous(name="Launch Test", group="Test")
-//@Disabled
+@Disabled
 public class AutoLaunchTest extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -86,12 +87,17 @@ public class AutoLaunchTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.65);
-        au.pause(1.5);
+        au.laucherStart(.67);
+
+        au.pause(1);
+
+        //Shoot 3 discs
+
+        au.pause(.5);
         au.shoot();
-        au.pause(.75);
+        au.pause(.5);
         au.shoot();
-        au.pause(.75);
+        au.pause(.5);
         au.shoot();
         au.launcherStop();
     }

@@ -28,6 +28,7 @@ package edu.cc.ftc.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -58,7 +59,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  */
 
 @Autonomous(name="Auto Block 2 Test", group="Blue Test")
-//@Disabled
+@Disabled
 public class AutoBlock2Test extends LinearOpMode {
 
     /* Declare OpMode members. */

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import edu.cc.ftc.HardwareCC.Hardware1;
 
 @TeleOp(name="Gyro Test", group="Tests")
-//@Disabled
+@Disabled
 public class Gyro_Test extends OpMode {
 
     /* Declare OpMode members. */

@@ -65,7 +65,7 @@ import static edu.cc.ftc.Utilities.STATE.OPEN;
  */
 
 @Autonomous(name="Auto Test", group="Test")
-//@Disabled
+@Disabled
 public class AutoTest extends LinearOpMode {
 
     /* Declare OpMode members. */

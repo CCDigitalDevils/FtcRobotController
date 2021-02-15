@@ -63,7 +63,7 @@ import edu.cc.ftc.Utilities.WebcamUtilities;
  */
 
 @Autonomous(name="Auto Camera Test", group="Test")
-//@Disabled
+@Disabled
 public class AutoCameraTest extends LinearOpMode {
 
     /* Declare OpMode members. */

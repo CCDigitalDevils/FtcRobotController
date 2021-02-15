@@ -59,7 +59,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  */
 
 @Autonomous(name="Move Test", group="Test")
-//@Disabled
+@Disabled
 public class AutoMoveTest extends LinearOpMode {
 
     /* Declare OpMode members. */

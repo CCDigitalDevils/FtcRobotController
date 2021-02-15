@@ -1,5 +1,6 @@
 package edu.cc.ftc.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import edu.cc.ftc.HardwareCC.Hardware1;
 
 @TeleOp(name="Drive Test", group="Tests")
-//@Disabled
+@Disabled
 public class Drive_Test extends OpMode {
 
     /* Declare OpMode members. */

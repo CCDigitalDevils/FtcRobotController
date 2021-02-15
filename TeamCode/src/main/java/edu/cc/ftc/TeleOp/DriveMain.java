@@ -76,7 +76,6 @@ public class DriveMain extends OpMode{
     private double spin;
     private double pos;
     private double pushOut;
-
     private double correction;
     private double speed;
     private double i;
@@ -91,25 +90,22 @@ public class DriveMain extends OpMode{
     private double TPC;
     private double liftmid;
     private double lifttop;
+    private double liftmid2;
     private double wobblepos;
 
-
-    STATE buttonB = STATE.OFF;
-    STATE loader = STATE.OFF;
-    STATE launcher = STATE.OFF;
-    STATE buttonA2 = STATE.OFF;
     STATE buttonA1 = STATE.OFF;
-    STATE pusher = STATE.OFF;
-    STATE trigger2 = STATE.OFF;
-    STATE bumperR = STATE.OFF;
-    STATE grab = STATE.OFF;
-    STATE midlift = STATE.OFF;
-    STATE toplift = STATE.OFF;
-    STATE buttonX1 = STATE.OFF;
+    STATE buttonA2 = STATE.OFF;
     STATE buttonB1 = STATE.OFF;
-    STATE wobble = STATE.DOWN;
+    STATE buttonX1 = STATE.OFF;
     STATE buttonX2 = STATE.OFF;
+    STATE buttonY1 = STATE.OFF;
+    STATE grab = STATE.OFF;
+    STATE pusher = STATE.OFF;
+    STATE launcher = STATE.OFF;
+    STATE wobble = STATE.DOWN;
+    STATE trigger2 = STATE.OFF;
     STATE power = STATE.OFF;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -120,11 +116,12 @@ public class DriveMain extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = .75;
+        correction = .72;
         maintain = 13;
         pushOut = 1;
         liftmid = .25;
         lifttop = .65;
+        liftmid2 = .42;
 
         robot.Servo1.setPosition(-1);
 
@@ -274,7 +271,7 @@ public class DriveMain extends OpMode{
         else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.OFF ){
             grab = STATE.ON;
             buttonA1 = STATE.OFF;
-            robot.Servo3.setPosition(1);
+            robot.Servo3.setPosition(.4);
         }
         if (gamepad1.a && grab == STATE.ON && buttonA1 == STATE.OFF){
             buttonA1 = STATE.INPROGRESS;
@@ -282,7 +279,7 @@ public class DriveMain extends OpMode{
         else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.ON){
             grab = STATE.OFF;
             buttonA1 = STATE.OFF;
-            robot.Servo3.setPosition(.75);
+            robot.Servo3.setPosition(0);
         }
 
 
@@ -303,12 +300,12 @@ public class DriveMain extends OpMode{
         }
 
 
-        // Move wobble lifter to up if mid
+        // Move wobble lifter to up if mid or mid2
         // Move wobble lifter to mid if up
-        if (gamepad1.b && wobble == STATE.MID && buttonB1 == STATE.OFF){
+        if (gamepad1.b && (wobble == STATE.MID || wobble == STATE.MID2) && buttonB1 == STATE.OFF){
             buttonB1 = STATE.INPROGRESS;
         }
-        else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && wobble == STATE.MID ){
+        else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && (wobble == STATE.MID || wobble == STATE.MID2) ){
             wobble = STATE.UP;
             buttonB1 = STATE.OFF;
             wobblepos = lifttop;
@@ -320,6 +317,27 @@ public class DriveMain extends OpMode{
             wobble = STATE.MID;
             buttonB1 = STATE.OFF;
             wobblepos = liftmid;
+        }
+
+        // Move wobble lifter to mid2 if up
+        // Move wobble lifter to up if mid2
+        if (gamepad1.y && wobble == STATE.UP && buttonY1 == STATE.OFF){
+            buttonY1 = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.y && buttonY1 == STATE.INPROGRESS && wobble == STATE.UP ){
+            wobble = STATE.MID2;
+            buttonY1 = STATE.OFF;
+            wobblepos = liftmid2;
+            grab = STATE.OFF;
+            robot.Servo3.setPosition(0);
+        }
+        if (gamepad1.y && wobble == STATE.MID2 && buttonY1 == STATE.OFF){
+            buttonY1 = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.y && buttonY1 == STATE.INPROGRESS && wobble == STATE.MID2){
+            wobble = STATE.UP;
+            buttonY1 = STATE.OFF;
+            wobblepos = lifttop;
         }
 
 

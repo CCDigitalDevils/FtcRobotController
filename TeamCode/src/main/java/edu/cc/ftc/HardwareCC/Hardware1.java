@@ -157,7 +157,9 @@ public class Hardware1
         Servo0.setPosition(.75);
         Servo1.setPosition(0);
         Servo2.setPosition(1);
-        Servo3.setPosition(.75);
+        Servo3.setPosition(0);
+
+
 
     }
  }

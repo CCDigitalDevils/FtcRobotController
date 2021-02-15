@@ -98,7 +98,7 @@ public class AutoRed extends LinearOpMode {
         waitForStart();
         String label = wu.idk();
         telemetry.addData(">", label);
-        au.laucherStart(.65);
+        au.laucherStart(.66);
 
         au.wobblepos(MID);
         au.pause(.5);
@@ -127,7 +127,7 @@ public class AutoRed extends LinearOpMode {
             au.pause(.3);
             gu.gyroTurn(.5, -90);
             au.pause(.3);
-            ae.encoderDrive(.5, 17);
+            ae.encoderDrive(.5, 15);
             au.wobblegrab(OPEN);
             au.wobblepos(DOWN);
             au.pause(.3);
@@ -149,9 +149,9 @@ public class AutoRed extends LinearOpMode {
             au.pause(.3);
             au.strafeTime(.5, 90, 1);
             au.pause(.3);
-            gu.gyroTurn(.5, 180);
+            gu.gyroTurn(.5, 0);
             au.pause(.3);
-            ae.encoderDrive(.5, 27);
+            ae.encoderDrive(-.5, -27);
         }
         else{
             telemetry.addData(">", "null");
