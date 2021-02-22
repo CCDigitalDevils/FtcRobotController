@@ -120,14 +120,14 @@ public class AutoRed extends LinearOpMode {
         if(label == "Single"){
             telemetry.addData(">", "Single");
             telemetry.update();
-            au.strafeTime(.5, -90, 1);
+            au.strafeTime(.5, -90, 1.25);
             gu.gyroTurn(.5, 0, 1);
             au.pause(.3);
-            ae.encoderDrive(.5, 100);
+            ae.encoderDrive(.5, 95);
             au.pause(.3);
             gu.gyroTurn(.5, -90);
             au.pause(.3);
-            ae.encoderDrive(.5, 15);
+            ae.encoderDrive(.5, 13);
             au.wobblegrab(OPEN);
             au.wobblepos(DOWN);
             au.pause(.3);
@@ -136,14 +136,14 @@ public class AutoRed extends LinearOpMode {
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
             telemetry.update();
-            au.strafeTime(.5, -90, 1);
+            au.strafeTime(.5, -90, 1.25);
             gu.gyroTurn(.5, 0, 1);
             au.pause(.3);
             ae.encoderDrive(.5, 126);
             au.pause(.3);
             gu.gyroTurn(.5, -90);
             au.pause(.3);
-            ae.encoderDrive(.5, 48);
+            ae.encoderDrive(.5, 43);
             au.wobblegrab(OPEN);
             au.wobblepos(DOWN);
             au.pause(.3);
@@ -151,12 +151,12 @@ public class AutoRed extends LinearOpMode {
             au.pause(.3);
             gu.gyroTurn(.5, 0);
             au.pause(.3);
-            ae.encoderDrive(-.5, -27);
+            ae.encoderDrive(-.5, -33);
         }
         else{
             telemetry.addData(">", "null");
             telemetry.update();
-            ae.encoderDrive(.5, 75);
+            ae.encoderDrive(.5, 72);
             au.pause(.3);
             gu.gyroTurn(.5, -90);
             au.pause(.3);
@@ -168,7 +168,7 @@ public class AutoRed extends LinearOpMode {
             au.pause(.3);
             ae.encoderDrive(-.5, -35);
             au.pause(.3);
-            au.strafeTime(.5,-90,.5);
+            au.strafeTime(.5,-90,.75);
         }
 
 }

@@ -36,8 +36,8 @@ public class Encoder_Test extends OpMode {
 
     @Override
     public void loop() {
-        telemetry.addData("Right Front", robot.Drive0.getCurrentPosition());
-        telemetry.addData("Left Front", robot.Drive1.getCurrentPosition());
+        telemetry.addData("Right Front", robot.Drive2.getCurrentPosition());
+        telemetry.addData("Left Front", robot.Drive3.getCurrentPosition());
 
     }
 }

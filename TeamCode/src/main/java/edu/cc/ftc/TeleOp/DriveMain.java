@@ -87,6 +87,7 @@ public class DriveMain extends OpMode{
     private double encoderI;
     private double encoderF;
     private double encoder;
+    private double encoderMili;
     private double TPC;
     private double liftmid;
     private double lifttop;
@@ -104,7 +105,7 @@ public class DriveMain extends OpMode{
     STATE launcher = STATE.OFF;
     STATE wobble = STATE.DOWN;
     STATE trigger2 = STATE.OFF;
-    STATE power = STATE.OFF;
+    STATE powerShot = STATE.OFF;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -117,7 +118,7 @@ public class DriveMain extends OpMode{
         robot.init(hardwareMap);
 
         correction = .72;
-        maintain = 13;
+        maintain = 18;
         pushOut = 1;
         liftmid = .25;
         lifttop = .65;
@@ -134,9 +135,7 @@ public class DriveMain extends OpMode{
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
     @Override
-    public void init_loop() {
-        rpm = new RPM(robot, 5.0);
-    }
+    public void init_loop() {}
 
     /*
      * Code to run ONCE when the driver hits PLAY
@@ -144,6 +143,7 @@ public class DriveMain extends OpMode{
     @Override
     public void start() {
         encoderI = robot.Drive4.getCurrentPosition();
+        timeI = System.currentTimeMillis();
     }
 
     /*
@@ -167,12 +167,19 @@ public class DriveMain extends OpMode{
         if (gamepad2.dpad_left){strafe2 = -.45;}
         else if (gamepad2.dpad_right){strafe2 = .45;}
 
-        drive1 *= .75;
-        strafe1 *= .75;
-        turn2 *= .75;
+        if(gamepad1.left_bumper){turn2 = .4;}
+        else if(gamepad1.right_bumper){turn2 = -.4;}
+        if (gamepad1.dpad_down){drive2 = -.4;}
+        else if (gamepad1.dpad_up){drive2 = .4;}
+        if (gamepad1.dpad_left){strafe2 = -.5;}
+        else if (gamepad1.dpad_right){strafe2 = .5;}
+
+        drive1 *= .80;
+        strafe1 *= .90;
+        turn1 *= .80;
 
         drive2 *= .50;
-        strafe2 *= .50;
+        strafe2 *= .60;
         turn2 *= .50;
 
         drive = drive1 + drive2;
@@ -215,7 +222,7 @@ public class DriveMain extends OpMode{
         }
         else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.OFF ){
             launcher = STATE.ON;
-            power = STATE.OFF;
+            powerShot = STATE.OFF;
             buttonA2 = STATE.OFF;
         }
         if (gamepad2.a && launcher == STATE.ON && buttonA2 == STATE.OFF){
@@ -226,19 +233,19 @@ public class DriveMain extends OpMode{
             buttonA2 = STATE.OFF;
         }
 
-        if (gamepad2.x && power == STATE.OFF && buttonX2 == STATE.OFF){
+        if (gamepad2.x && powerShot == STATE.OFF && buttonX2 == STATE.OFF){
             buttonX2 = STATE.INPROGRESS;
         }
-        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && power == STATE.OFF ){
+        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && powerShot == STATE.OFF ){
             launcher = STATE.OFF;
-            power = STATE.ON;
+            powerShot = STATE.ON;
             buttonX2 = STATE.OFF;
         }
-        if (gamepad2.x && power == STATE.ON && buttonX2 == STATE.OFF){
+        if (gamepad2.x && powerShot == STATE.ON && buttonX2 == STATE.OFF){
             buttonX2 = STATE.INPROGRESS;
         }
-        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && power == STATE.ON){
-            power = STATE.OFF;
+        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && powerShot == STATE.ON){
+            powerShot = STATE.OFF;
             buttonX2 = STATE.OFF;
         }
 
@@ -246,10 +253,10 @@ public class DriveMain extends OpMode{
 
 
         //Shooting trigger controls
-        if (gamepad2.right_trigger > .25 && pusher == STATE.OFF && trigger2 == STATE.OFF  && (launcher == STATE.ON || power == STATE.ON) ){
+        if (gamepad2.right_trigger > .10 && pusher == STATE.OFF && trigger2 == STATE.OFF  && (launcher == STATE.ON || powerShot == STATE.ON) ){
             trigger2 = STATE.INPROGRESS;
         }
-        else if (gamepad2.right_trigger < .25 && trigger2 == STATE.INPROGRESS && pusher == STATE.OFF ){
+        else if (gamepad2.right_trigger < .10 && trigger2 == STATE.INPROGRESS && pusher == STATE.OFF ){
             pusher = STATE.ON;
             trigger2 = STATE.OFF;
             robot.Servo0.setPosition(1);
@@ -351,18 +358,22 @@ public class DriveMain extends OpMode{
         telemetry.addData("position", pos);
 
         encoderF = robot.Drive4.getCurrentPosition();
+        timeF = System.currentTimeMillis();
         encoder = encoderF - encoderI;
+        time = timeF - timeI;
         telemetry.addData("Ticks encoderI = ", encoderI);
-        encoderI = encoderF;
         telemetry.addData("Ticks encoderF = ", encoderF);
+        encoderI = encoderF;
+        timeI = timeF;
+        encoderMili = (encoder / time) * 100;
 
 
         telemetry.addData("Ticks per code cycle = ", encoder);
 /*
-        if (launcher == STATE.ON && encoder > maintain + 1){
+        if (launcher == STATE.ON && encoderMili > maintain + 2){
             correction = correction - .0005;
         }
-        if (launcher == STATE.ON && encoder < maintain - 1 && i > 500){
+        if (launcher == STATE.ON && encoderMili < maintain - 2 && i > 500){
             correction = correction + .0005;
         }
         if (launcher == STATE.ON){
@@ -376,16 +387,16 @@ public class DriveMain extends OpMode{
 
         correction = Range.clip(correction, 0, 1);
 
-        if(launcher == STATE.ON && power == STATE.ON){
-            power = STATE.OFF;
+        if(launcher == STATE.ON && powerShot == STATE.ON){
+            powerShot = STATE.OFF;
             launcher = STATE.OFF;
         }
 
         if (launcher == STATE.ON){
             speed = correction;
         }
-        else if (power == STATE.ON){
-            speed = correction - .09;
+        else if (powerShot == STATE.ON){
+            speed = correction * .93;
         }
         else{
             speed = 0;

@@ -1,48 +1,39 @@
 package edu.cc.ftc.Utilities;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+
 import edu.cc.ftc.HardwareCC.Hardware1;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 public class RPM {
     private Hardware1 robot;
+    private LinearOpMode linearOpMode;
+    private ElapsedTime runtime;
 
 
     private double encoderI;
     private double encoderF;
     private double encoder;
+    private double timeI;
+    private double timeF;
+    private double time;
 
     private double m = 0.0;
 
-    public RPM(Hardware1 robot, double maintain)
-    {
+    public RPM(Hardware1 robot, LinearOpMode linearOpMode, ElapsedTime runtime) {
         this.robot = robot;
-        this.m = maintain;
+        this.linearOpMode = linearOpMode;
+        this.runtime = runtime;
     }
 
-    public void updateMaintain(double maintain)
-    {
-        m = maintain;
-    }
-    public void startup(){
-        encoderI = robot.Drive0.getCurrentPosition();
-
+    public void Startup(){
+        encoderI = robot.Drive4.getCurrentPosition();
+        timeI = System.currentTimeMillis();
     }
 
-    public double calcCorrection()
-    {
-        double c = 0.0;
-        //do whate ever
 
-
-
-        return c;
-    }
-    public void tpc(){
-        encoderF = robot.Drive0.getCurrentPosition();
-        encoder = encoderF - encoderI;
-        encoderI = encoderF;
-        telemetry.addData("Ticks per code cycle = ", encoder);
-    }
 
 }
