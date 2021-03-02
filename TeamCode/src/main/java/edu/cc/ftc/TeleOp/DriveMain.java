@@ -88,7 +88,6 @@ public class DriveMain extends OpMode{
     private double encoderF;
     private double encoder;
     private double encoderMili;
-    private double TPC;
     private double liftmid;
     private double lifttop;
     private double liftmid2;
@@ -100,11 +99,11 @@ public class DriveMain extends OpMode{
     STATE buttonX1 = STATE.OFF;
     STATE buttonX2 = STATE.OFF;
     STATE buttonY1 = STATE.OFF;
+    STATE trigger2 = STATE.OFF;
     STATE grab = STATE.OFF;
     STATE pusher = STATE.OFF;
     STATE launcher = STATE.OFF;
     STATE wobble = STATE.DOWN;
-    STATE trigger2 = STATE.OFF;
     STATE powerShot = STATE.OFF;
 
     /*
@@ -152,202 +151,253 @@ public class DriveMain extends OpMode{
     @Override
     public void loop() {
 
-        drive1  = gamepad1.left_stick_y;
-        strafe1 = -gamepad1.left_stick_x;
-        turn1   = -gamepad1.right_stick_x;
+        //Driving inputs
+        {
+            //Driver 1
+            {
+                drive1 = gamepad1.left_stick_y;
+                strafe1 = -gamepad1.left_stick_x;
+                turn1 = -gamepad1.right_stick_x;
+            }
 
-        drive2  = -gamepad2.left_stick_y;
-        strafe2 = gamepad2.left_stick_x;
-        turn2   = -gamepad2.right_stick_x;
+            //Driver 2
+            {
+                drive2 = -gamepad2.left_stick_y;
+                strafe2 = gamepad2.left_stick_x;
+                turn2 = -gamepad2.right_stick_x;
+            }
+        }
 
-        if(gamepad2.left_bumper){turn2 = .35;}
-        else if(gamepad2.right_bumper){turn2 = -.35;}
-        if (gamepad2.dpad_down){drive2 = -.35;}
-        else if (gamepad2.dpad_up){drive2 = .35;}
-        if (gamepad2.dpad_left){strafe2 = -.45;}
-        else if (gamepad2.dpad_right){strafe2 = .45;}
+        //Fine controls
+        {
+            //Driver1
+            {
+                if (gamepad1.left_bumper) {
+                    turn2 = .4;
+                } else if (gamepad1.right_bumper) {
+                    turn2 = -.4;
+                }
+                if (gamepad1.dpad_down) {
+                    drive2 = -.4;
+                } else if (gamepad1.dpad_up) {
+                    drive2 = .4;
+                }
+                if (gamepad1.dpad_left) {
+                    strafe2 = -.5;
+                } else if (gamepad1.dpad_right) {
+                    strafe2 = .5;
+                }
+            }
 
-        if(gamepad1.left_bumper){turn2 = .4;}
-        else if(gamepad1.right_bumper){turn2 = -.4;}
-        if (gamepad1.dpad_down){drive2 = -.4;}
-        else if (gamepad1.dpad_up){drive2 = .4;}
-        if (gamepad1.dpad_left){strafe2 = -.5;}
-        else if (gamepad1.dpad_right){strafe2 = .5;}
+            //Driver2
+            {
+                if (gamepad2.left_bumper) {
+                    turn2 = .35;
+                } else if (gamepad2.right_bumper) {
+                    turn2 = -.35;
+                }
+                if (gamepad2.dpad_down) {
+                    drive2 = -.35;
+                } else if (gamepad2.dpad_up) {
+                    drive2 = .35;
+                }
+                if (gamepad2.dpad_left) {
+                    strafe2 = -.45;
+                } else if (gamepad2.dpad_right) {
+                    strafe2 = .45;
+                }
+            }
+        }
 
-        drive1 *= .80;
-        strafe1 *= .90;
-        turn1 *= .80;
+        //Gear down
+        {
+            //Driver 1
+            {
+                drive1 *= .80;
+                strafe1 *= .90;
+                turn1 *= .80;
+            }
 
-        drive2 *= .50;
-        strafe2 *= .60;
-        turn2 *= .50;
+            //Driver 2
+            {
+                drive2 *= .50;
+                strafe2 *= .60;
+                turn2 *= .50;
+            }
+        }
 
-        drive = drive1 + drive2;
-        strafe = strafe1 + strafe2;
-        turn = turn1 + turn2;
+        //Combine Driver Controls
+        {
+            drive = drive1 + drive2;
+            strafe = strafe1 + strafe2;
+            turn = turn1 + turn2;
+        }
 
-        lR = ((-strafe + drive) + turn);
-        rR = ((strafe  + drive) - turn);
-        lF = ((strafe  + drive) + turn);
-        rF = ((-strafe + drive) - turn);
+        //Calculate the power for each wheel
+        {
+            lR = ((-strafe + drive) + turn);
+            rR = ((strafe + drive) - turn);
+            lF = ((strafe + drive) + turn);
+            rF = ((-strafe + drive) - turn);
+        }
 
-        lR = Range.clip(lR, -1, 1);
-        rR = Range.clip(rR, -1, 1);
-        lF = Range.clip(lF, -1, 1);
-        rF = Range.clip(rF, -1, 1);
+        //Make sure powers are within limits
+        {
+            lR = Range.clip(lR, -1, 1);
+            rR = Range.clip(rR, -1, 1);
+            lF = Range.clip(lF, -1, 1);
+            rF = Range.clip(rF, -1, 1);
+        }
 
-        robot.Drive0.setPower(lF);
-        robot.Drive1.setPower(rF);
-        robot.Drive2.setPower(lR);
-        robot.Drive3.setPower(rR);
-
-
+        //Assign power to motors
+        {
+            robot.Drive0.setPower(lF);
+            robot.Drive1.setPower(rF);
+            robot.Drive2.setPower(lR);
+            robot.Drive3.setPower(rR);
+        }
 
         //Loading controls
-        if(gamepad1.right_trigger >= .10){
-            robot.Drive5.setPower(1);
-        }
-        else if (gamepad1.left_trigger >= .10){
-            robot.Drive5.setPower(-1);
-        }
-        else{
-            robot.Drive5.setPower(0);
-        }
-
-
-
-        // launcher on off controls
-        if (gamepad2.a && launcher == STATE.OFF && buttonA2 == STATE.OFF){
-            buttonA2 = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.OFF ){
-            launcher = STATE.ON;
-            powerShot = STATE.OFF;
-            buttonA2 = STATE.OFF;
-        }
-        if (gamepad2.a && launcher == STATE.ON && buttonA2 == STATE.OFF){
-            buttonA2 = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.ON){
-            launcher = STATE.OFF;
-            buttonA2 = STATE.OFF;
+        {
+            if (gamepad1.right_trigger >= .10) {
+                robot.Drive5.setPower(1);
+            } else if (gamepad1.left_trigger >= .10) {
+                robot.Drive5.setPower(-1);
+            } else {
+                robot.Drive5.setPower(0);
+            }
         }
 
-        if (gamepad2.x && powerShot == STATE.OFF && buttonX2 == STATE.OFF){
-            buttonX2 = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && powerShot == STATE.OFF ){
-            launcher = STATE.OFF;
-            powerShot = STATE.ON;
-            buttonX2 = STATE.OFF;
-        }
-        if (gamepad2.x && powerShot == STATE.ON && buttonX2 == STATE.OFF){
-            buttonX2 = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && powerShot == STATE.ON){
-            powerShot = STATE.OFF;
-            buttonX2 = STATE.OFF;
-        }
+        //Launcher on / off controls
+        {
+            //on / off high goal
+            {
+                if (gamepad2.a && launcher == STATE.OFF && buttonA2 == STATE.OFF) {
+                    buttonA2 = STATE.INPROGRESS;
+                } else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.OFF) {
+                    launcher = STATE.ON;
+                    powerShot = STATE.OFF;
+                    buttonA2 = STATE.OFF;
+                }
+                if (gamepad2.a && launcher == STATE.ON && buttonA2 == STATE.OFF) {
+                    buttonA2 = STATE.INPROGRESS;
+                } else if (!gamepad2.a && buttonA2 == STATE.INPROGRESS && launcher == STATE.ON) {
+                    launcher = STATE.OFF;
+                    buttonA2 = STATE.OFF;
+                }
+            }
 
-
-
+            //on / off powerShot
+            {
+                if (gamepad2.x && powerShot == STATE.OFF && buttonX2 == STATE.OFF) {
+                    buttonX2 = STATE.INPROGRESS;
+                } else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && powerShot == STATE.OFF) {
+                    launcher = STATE.OFF;
+                    powerShot = STATE.ON;
+                    buttonX2 = STATE.OFF;
+                }
+                if (gamepad2.x && powerShot == STATE.ON && buttonX2 == STATE.OFF) {
+                    buttonX2 = STATE.INPROGRESS;
+                } else if (!gamepad2.x && buttonX2 == STATE.INPROGRESS && powerShot == STATE.ON) {
+                    powerShot = STATE.OFF;
+                    buttonX2 = STATE.OFF;
+                }
+            }
+        }
 
         //Shooting trigger controls
-        if (gamepad2.right_trigger > .10 && pusher == STATE.OFF && trigger2 == STATE.OFF  && (launcher == STATE.ON || powerShot == STATE.ON) ){
-            trigger2 = STATE.INPROGRESS;
+        {
+            if (gamepad2.right_trigger > .10 && pusher == STATE.OFF && trigger2 == STATE.OFF && (launcher == STATE.ON || powerShot == STATE.ON)) {
+                trigger2 = STATE.INPROGRESS;
+            } else if (gamepad2.right_trigger < .10 && trigger2 == STATE.INPROGRESS && pusher == STATE.OFF) {
+                pusher = STATE.ON;
+                trigger2 = STATE.OFF;
+                robot.Servo0.setPosition(1);
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == 1 && j >= 75) {
+                pusher = STATE.OFF;
+                robot.Servo0.setPosition(.75);
+                j = 0;
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == 1) {
+                j++;
+            }
         }
-        else if (gamepad2.right_trigger < .10 && trigger2 == STATE.INPROGRESS && pusher == STATE.OFF ){
-            pusher = STATE.ON;
-            trigger2 = STATE.OFF;
-            robot.Servo0.setPosition(1);
-        }
-        else if(pusher == STATE.ON && robot.Servo0.getPosition() == 1 && j >= 75){
-            pusher = STATE.OFF;
-            robot.Servo0.setPosition(.75);
-            j = 0;
-        }
-        else if(pusher == STATE.ON && robot.Servo0.getPosition() == 1){
-            j++;
-        }
-
 
         //Close wobble grabber
-        if (gamepad1.a && grab == STATE.OFF && buttonA1 == STATE.OFF){
-            buttonA1 = STATE.INPROGRESS;
-        }
-        else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.OFF ){
-            grab = STATE.ON;
-            buttonA1 = STATE.OFF;
-            robot.Servo3.setPosition(.4);
-        }
-        if (gamepad1.a && grab == STATE.ON && buttonA1 == STATE.OFF){
-            buttonA1 = STATE.INPROGRESS;
-        }
-        else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.ON){
-            grab = STATE.OFF;
-            buttonA1 = STATE.OFF;
-            robot.Servo3.setPosition(0);
-        }
-
-
-        // Move wobble lifter to mid if up or down
-        // Move wobble lifter to down if mid
-        if (gamepad1.x && buttonX1 == STATE.OFF){
-            buttonX1 = STATE.INPROGRESS;
-        }
-        else if (!gamepad1.x && buttonX1 == STATE.INPROGRESS && wobble == STATE.MID){
-            wobble = STATE.DOWN;
-            buttonX1 = STATE.OFF;
-            wobblepos = 0;
-        }
-        else if (!gamepad1.x && buttonX1 == STATE.INPROGRESS){
-            wobble = STATE.MID;
-            buttonX1 = STATE.OFF;
-            wobblepos = liftmid;
+        {
+            if (gamepad1.a && grab == STATE.OFF && buttonA1 == STATE.OFF) {
+                buttonA1 = STATE.INPROGRESS;
+            } else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.OFF) {
+                grab = STATE.ON;
+                buttonA1 = STATE.OFF;
+                robot.Servo3.setPosition(.55);
+            }
+            if (gamepad1.a && grab == STATE.ON && buttonA1 == STATE.OFF) {
+                buttonA1 = STATE.INPROGRESS;
+            } else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.ON) {
+                grab = STATE.OFF;
+                buttonA1 = STATE.OFF;
+                robot.Servo3.setPosition(0.1);
+            }
         }
 
+        //Wobble arm controls
+        {
+            // Move wobble lifter to mid if up or down
+            // Move wobble lifter to down if mid
+            {
+                if (gamepad1.x && buttonX1 == STATE.OFF) {
+                    buttonX1 = STATE.INPROGRESS;
+                } else if (!gamepad1.x && buttonX1 == STATE.INPROGRESS && wobble == STATE.MID) {
+                    wobble = STATE.DOWN;
+                    buttonX1 = STATE.OFF;
+                    wobblepos = 0;
+                } else if (!gamepad1.x && buttonX1 == STATE.INPROGRESS) {
+                    wobble = STATE.MID;
+                    buttonX1 = STATE.OFF;
+                    wobblepos = liftmid;
+                }
+            }
 
-        // Move wobble lifter to up if mid or mid2
-        // Move wobble lifter to mid if up
-        if (gamepad1.b && (wobble == STATE.MID || wobble == STATE.MID2) && buttonB1 == STATE.OFF){
-            buttonB1 = STATE.INPROGRESS;
-        }
-        else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && (wobble == STATE.MID || wobble == STATE.MID2) ){
-            wobble = STATE.UP;
-            buttonB1 = STATE.OFF;
-            wobblepos = lifttop;
-        }
-        if (gamepad1.b && wobble == STATE.UP && buttonB1 == STATE.OFF){
-            buttonB1 = STATE.INPROGRESS;
-        }
-        else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && wobble == STATE.UP){
-            wobble = STATE.MID;
-            buttonB1 = STATE.OFF;
-            wobblepos = liftmid;
-        }
+            // Move wobble lifter to up if mid or mid2
+            // Move wobble lifter to mid if up
+            {
+                if (gamepad1.b && (wobble == STATE.MID || wobble == STATE.MID2) && buttonB1 == STATE.OFF) {
+                    buttonB1 = STATE.INPROGRESS;
+                } else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && (wobble == STATE.MID || wobble == STATE.MID2)) {
+                    wobble = STATE.UP;
+                    buttonB1 = STATE.OFF;
+                    wobblepos = lifttop;
+                }
+                if (gamepad1.b && wobble == STATE.UP && buttonB1 == STATE.OFF) {
+                    buttonB1 = STATE.INPROGRESS;
+                } else if (!gamepad1.b && buttonB1 == STATE.INPROGRESS && wobble == STATE.UP) {
+                    wobble = STATE.MID;
+                    buttonB1 = STATE.OFF;
+                    wobblepos = liftmid;
+                }
+            }
 
-        // Move wobble lifter to mid2 if up
-        // Move wobble lifter to up if mid2
-        if (gamepad1.y && wobble == STATE.UP && buttonY1 == STATE.OFF){
-            buttonY1 = STATE.INPROGRESS;
+            // Move wobble lifter to mid2 if up
+            // Move wobble lifter to up if mid2
+            {
+                if (gamepad1.y && wobble == STATE.UP && buttonY1 == STATE.OFF) {
+                    buttonY1 = STATE.INPROGRESS;
+                } else if (!gamepad1.y && buttonY1 == STATE.INPROGRESS && wobble == STATE.UP) {
+                    wobble = STATE.MID2;
+                    buttonY1 = STATE.OFF;
+                    wobblepos = liftmid2;
+                    grab = STATE.OFF;
+                    robot.Servo3.setPosition(0);
+                }
+                if (gamepad1.y && wobble == STATE.MID2 && buttonY1 == STATE.OFF) {
+                    buttonY1 = STATE.INPROGRESS;
+                } else if (!gamepad1.y && buttonY1 == STATE.INPROGRESS && wobble == STATE.MID2) {
+                    wobble = STATE.UP;
+                    buttonY1 = STATE.OFF;
+                    wobblepos = lifttop;
+                }
+            }
         }
-        else if (!gamepad1.y && buttonY1 == STATE.INPROGRESS && wobble == STATE.UP ){
-            wobble = STATE.MID2;
-            buttonY1 = STATE.OFF;
-            wobblepos = liftmid2;
-            grab = STATE.OFF;
-            robot.Servo3.setPosition(0);
-        }
-        if (gamepad1.y && wobble == STATE.MID2 && buttonY1 == STATE.OFF){
-            buttonY1 = STATE.INPROGRESS;
-        }
-        else if (!gamepad1.y && buttonY1 == STATE.INPROGRESS && wobble == STATE.MID2){
-            wobble = STATE.UP;
-            buttonY1 = STATE.OFF;
-            wobblepos = lifttop;
-        }
-
-
         telemetry.addData("pusher", pusher);
         telemetry.addData("buttonX", trigger2);
         telemetry.addData("push pos", robot.Servo0.getPosition() );
