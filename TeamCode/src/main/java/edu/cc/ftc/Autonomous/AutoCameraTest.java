@@ -94,7 +94,7 @@ public class AutoCameraTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        String label = wu.idk();
+        String label = wu.getLabel();
         telemetry.addData(">", label);
 
         if(label == "Single"){

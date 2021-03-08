@@ -63,7 +63,7 @@ import static edu.cc.ftc.Utilities.STATE.RAISED;
  */
 
 @Autonomous(name="Launch Test", group="Test")
-@Disabled
+//@Disabled
 public class AutoLaunchTest extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -87,9 +87,9 @@ public class AutoLaunchTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.67);
+        au.laucherStart(.73);
 
-        au.pause(1);
+        au.pause(2);
 
         //Shoot 3 discs
 

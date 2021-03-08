@@ -6,6 +6,11 @@ import com.qualcomm.robotcore.util.Range;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 
+import static edu.cc.ftc.HardwareCC.Hardware1.grab0;
+import static edu.cc.ftc.HardwareCC.Hardware1.grab1;
+import static edu.cc.ftc.HardwareCC.Hardware1.shooter0;
+import static edu.cc.ftc.HardwareCC.Hardware1.shooter1;
+
 public class AutonomousUtilities {
     private Hardware1 robot;
     private LinearOpMode linearOpMode;
@@ -16,6 +21,7 @@ public class AutonomousUtilities {
         this.linearOpMode = linearOpMode;
         this.runtime = runtime;
     }
+
 
     private void strafe(double speed, double angle) {
         angle = angle + 45;
@@ -42,9 +48,9 @@ public class AutonomousUtilities {
     }
 
     public void shoot(){
-        robot.Servo0.setPosition(1);
+        robot.Servo0.setPosition(shooter1);
         pause(.4);
-        robot.Servo0.setPosition(.75);
+        robot.Servo0.setPosition(shooter0);
         pause(.4);
     }
 
@@ -81,10 +87,10 @@ public class AutonomousUtilities {
     public void wobblegrab(STATE pos){
         double gpos = 0;
         if (pos == STATE.OPEN){
-            gpos = .1;
+            gpos = grab0;
         }
         else if (pos == STATE.CLOSED){
-            gpos = .55;
+            gpos = grab1;
         }
         robot.Servo3.setPosition(gpos);
     }

@@ -99,22 +99,23 @@ public class WebcamUtilities{
         if (tfod != null) {
             tfod.activate();
         }
+        tfod.setZoom(2, 1.78);
 
     }
 
-    public String idk(){
+    public String getLabel(){
         String label = new String("");
-        for(int j = 0; j <100000; j++) {
-            if (linearOpMode.opModeIsActive()) {
+        for(int j = 0; j <10; j++) {
+            if (!linearOpMode.isStopRequested()) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                        //telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    List<Recognition> Recognitions = tfod.getRecognitions();
+                    //if (Recognitions != null) {
+                        //telemetry.addData("# Object Detected", Recognitions.size());
                         // step through the list of recognitions and display boundary info.
                         int i = 0;
-                        for (Recognition recognition : updatedRecognitions) {
+                        for (Recognition recognition : Recognitions) {
                             //telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                             //telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                             //        recognition.getLeft(), recognition.getTop());
@@ -123,7 +124,7 @@ public class WebcamUtilities{
                             label = recognition.getLabel();
                         }
                         //telemetry.update();
-                    }
+                    //}
                 }
             }
         }

@@ -28,12 +28,14 @@ package edu.cc.ftc.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.AutoEncoder;
+import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 import edu.cc.ftc.Utilities.WebcamUtilities;
@@ -77,6 +79,9 @@ public class AutoRed extends LinearOpMode {
     private GyroUtilities gu;
     private AutoEncoder ae;
     private WebcamUtilities wu;
+    private AutoPaths path;
+
+    String label = "";
 
     @Override
     public void runOpMode() {
@@ -89,16 +94,27 @@ public class AutoRed extends LinearOpMode {
         gu = new GyroUtilities(robot, this, runtime);
         ae = new AutoEncoder(robot,this,runtime);
         wu = new WebcamUtilities(robot, this, runtime);
+        path = new AutoPaths(robot, this, runtime);
 
         wu.startCamera();
-        telemetry.addData(">", "Ready");
-        telemetry.update();
+
+
+        while(!isStarted()){
+            label = wu.getLabel();
+            if(label.equals("")){
+                label = "none";
+            }
+            telemetry.addData(">", "Ready");
+            telemetry.addData(">", label);
+            telemetry.update();
+        }
+
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        String label = wu.idk();
+       // label = wu.getLabel();
         telemetry.addData(">", label);
-        au.laucherStart(.66);
+        au.laucherStart(.73);
 
         au.wobblepos(MID);
         au.pause(.5);
@@ -119,13 +135,12 @@ public class AutoRed extends LinearOpMode {
         //Take path based on ring stack
         if(label == "Single"){
             telemetry.addData(">", "Single");
-            telemetry.update();
             au.strafeTime(.5, -90, 1.25);
-            gu.gyroTurn(.5, 0, 1);
+            gu.gyroTurn(.4, 0, 1);
             au.pause(.3);
             ae.encoderDrive(.5, 95);
             au.pause(.3);
-            gu.gyroTurn(.5, -90);
+            gu.gyroTurn(.4, -90);
             au.pause(.3);
             ae.encoderDrive(.5, 13);
             au.wobblegrab(OPEN);
@@ -135,13 +150,12 @@ public class AutoRed extends LinearOpMode {
         }
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
-            telemetry.update();
             au.strafeTime(.5, -90, 1.25);
-            gu.gyroTurn(.5, 0, 1);
+            gu.gyroTurn(.4, 0, 1);
             au.pause(.3);
             ae.encoderDrive(.5, 126);
             au.pause(.3);
-            gu.gyroTurn(.5, -90);
+            gu.gyroTurn(.4, -90);
             au.pause(.3);
             ae.encoderDrive(.5, 43);
             au.wobblegrab(OPEN);
@@ -149,26 +163,26 @@ public class AutoRed extends LinearOpMode {
             au.pause(.3);
             au.strafeTime(.5, 90, 1);
             au.pause(.3);
-            gu.gyroTurn(.5, 0);
+            gu.gyroTurn(.4, 0);
             au.pause(.3);
             ae.encoderDrive(-.5, -33);
         }
         else{
             telemetry.addData(">", "null");
-            telemetry.update();
-            ae.encoderDrive(.5, 72);
+            ae.encoderDrive(.5, 68);
             au.pause(.3);
-            gu.gyroTurn(.5, -90);
+            gu.gyroTurn(.4, -90);
             au.pause(.3);
-            ae.encoderDrive(.5, 35);
+            ae.encoderDrive(.5, 33);
             au.wobblegrab(OPEN);
             au.wobblepos(DOWN);
             au.pause(.3);
-            gu.gyroTurn(.5, 270, 1);
+            au.strafeTime(.5, 90, .5);
+            gu.gyroTurn(.4, 270, 1);
             au.pause(.3);
             ae.encoderDrive(-.5, -35);
             au.pause(.3);
-            au.strafeTime(.5,-90,.75);
+            au.strafeTime(.5,-90,1.25);
         }
 
 }

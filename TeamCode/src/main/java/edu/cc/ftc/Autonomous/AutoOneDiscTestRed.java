@@ -37,6 +37,9 @@ import edu.cc.ftc.Utilities.AutoEncoder;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 
+import static edu.cc.ftc.Utilities.STATE.DOWN;
+import static edu.cc.ftc.Utilities.STATE.OPEN;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -58,9 +61,9 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Block 1 Test", group="Blue Test")
+@Autonomous(name="Auto One Disc Test Red", group="Red Test")
 @Disabled
-public class AutoBlock1Test extends LinearOpMode {
+public class AutoOneDiscTestRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
@@ -83,7 +86,19 @@ public class AutoBlock1Test extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        ae.encoderDrive(.75, 75);
+        telemetry.addData(">", "Single");
+        au.strafeTime(.5, -90, 1.25);
+        gu.gyroTurn(.5, 0, 1);
+        au.pause(.3);
+        ae.encoderDrive(.5, 95);
+        au.pause(.3);
+        gu.gyroTurn(.5, -90);
+        au.pause(.3);
+        ae.encoderDrive(.5, 13);
+        au.wobblegrab(OPEN);
+        au.wobblepos(DOWN);
+        au.pause(.3);
+        au.strafeTime(.5, 90, 1.5);
 
 }
 }

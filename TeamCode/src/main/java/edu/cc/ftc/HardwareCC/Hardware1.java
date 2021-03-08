@@ -77,9 +77,11 @@ public class Hardware1
     public WebcamName Webcam1 = null;
     public int tfodMonitorViewId = 0;
 
-    public static final double MID_SERVO       =  0.5 ;
-    public static final double ARM_UP_POWER    =  0.45 ;
-    public static final double ARM_DOWN_POWER  = -0.45 ;
+    public static final double shooter0 = .75;
+    public static final double shooter1 = 1;
+    public static final double grab0 = .1;
+    public static final double grab1 = .55;
+
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -154,10 +156,10 @@ public class Hardware1
         Servo2 = hwMap.get(Servo.class, "E.S.2");
         Servo3 = hwMap.get(Servo.class, "E.S.3");
 
-        Servo0.setPosition(.75);
+        Servo0.setPosition(shooter0);
         Servo1.setPosition(0);
         Servo2.setPosition(1);
-        Servo3.setPosition(0.1);
+        Servo3.setPosition(grab0);
 
 
 

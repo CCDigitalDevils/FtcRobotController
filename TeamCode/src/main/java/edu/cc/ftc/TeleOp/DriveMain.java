@@ -37,6 +37,11 @@ import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.RPM;
 import edu.cc.ftc.Utilities.STATE;
 
+import static edu.cc.ftc.HardwareCC.Hardware1.grab0;
+import static edu.cc.ftc.HardwareCC.Hardware1.grab1;
+import static edu.cc.ftc.HardwareCC.Hardware1.shooter0;
+import static edu.cc.ftc.HardwareCC.Hardware1.shooter1;
+
 /**
  * This file provides basic Telop driving for a Pushbot robot.
  * The code is structured as an Iterative OpMode
@@ -116,7 +121,7 @@ public class DriveMain extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = .72;
+        correction = .80;
         maintain = 18;
         pushOut = 1;
         liftmid = .25;
@@ -178,14 +183,14 @@ public class DriveMain extends OpMode{
                     turn2 = -.4;
                 }
                 if (gamepad1.dpad_down) {
-                    drive2 = -.4;
-                } else if (gamepad1.dpad_up) {
                     drive2 = .4;
+                } else if (gamepad1.dpad_up) {
+                    drive2 = -.4;
                 }
                 if (gamepad1.dpad_left) {
-                    strafe2 = -.5;
-                } else if (gamepad1.dpad_right) {
                     strafe2 = .5;
+                } else if (gamepad1.dpad_right) {
+                    strafe2 = -.5;
                 }
             }
 
@@ -312,10 +317,10 @@ public class DriveMain extends OpMode{
             } else if (gamepad2.right_trigger < .10 && trigger2 == STATE.INPROGRESS && pusher == STATE.OFF) {
                 pusher = STATE.ON;
                 trigger2 = STATE.OFF;
-                robot.Servo0.setPosition(1);
+                robot.Servo0.setPosition(shooter1);
             } else if (pusher == STATE.ON && robot.Servo0.getPosition() == 1 && j >= 75) {
                 pusher = STATE.OFF;
-                robot.Servo0.setPosition(.75);
+                robot.Servo0.setPosition(shooter0);
                 j = 0;
             } else if (pusher == STATE.ON && robot.Servo0.getPosition() == 1) {
                 j++;
@@ -329,14 +334,14 @@ public class DriveMain extends OpMode{
             } else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.OFF) {
                 grab = STATE.ON;
                 buttonA1 = STATE.OFF;
-                robot.Servo3.setPosition(.55);
+                robot.Servo3.setPosition(grab1);
             }
             if (gamepad1.a && grab == STATE.ON && buttonA1 == STATE.OFF) {
                 buttonA1 = STATE.INPROGRESS;
             } else if (!gamepad1.a && buttonA1 == STATE.INPROGRESS && grab == STATE.ON) {
                 grab = STATE.OFF;
                 buttonA1 = STATE.OFF;
-                robot.Servo3.setPosition(0.1);
+                robot.Servo3.setPosition(grab0);
             }
         }
 
@@ -446,7 +451,7 @@ public class DriveMain extends OpMode{
             speed = correction;
         }
         else if (powerShot == STATE.ON){
-            speed = correction * .93;
+            speed = correction * .91;
         }
         else{
             speed = 0;

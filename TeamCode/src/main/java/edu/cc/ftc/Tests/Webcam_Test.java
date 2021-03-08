@@ -107,7 +107,7 @@ public class Webcam_Test extends LinearOpMode {
             // (typically 1.78 or 16/9).
 
             // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
-            //tfod.setZoom(2.5, 1.78);
+            tfod.setZoom(2, 1.78);
         }
 
         /** Wait for the game to begin */
@@ -120,12 +120,12 @@ public class Webcam_Test extends LinearOpMode {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                      telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    List<Recognition> Recognitions = tfod.getRecognitions();
+                   // if (Recognitions != null) {
+                      telemetry.addData("# Object Detected", Recognitions.size());
                       // step through the list of recognitions and display boundary info.
                       int i = 0;
-                      for (Recognition recognition : updatedRecognitions) {
+                      for (Recognition recognition : Recognitions) {
                         telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                         telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                                 recognition.getLeft(), recognition.getTop());
@@ -133,7 +133,7 @@ public class Webcam_Test extends LinearOpMode {
                                 recognition.getRight(), recognition.getBottom());
                       }
                       telemetry.update();
-                    }
+                    //}
                 }
             }
         }
