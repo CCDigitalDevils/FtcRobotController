@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.AutoEncoder;
+import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 
@@ -62,7 +63,7 @@ import static edu.cc.ftc.Utilities.STATE.OPEN;
  */
 
 @Autonomous(name="Auto No Disc Test Red", group="Red Test")
-@Disabled
+//@Disabled
 public class AutoNoDiscTestRed extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -72,6 +73,7 @@ public class AutoNoDiscTestRed extends LinearOpMode {
     private AutonomousUtilities au;
     private GyroUtilities gu;
     private AutoEncoder ae;
+    private AutoPaths path;
 
     @Override
     public void runOpMode() {
@@ -83,23 +85,12 @@ public class AutoNoDiscTestRed extends LinearOpMode {
         au = new AutonomousUtilities(robot, this, runtime);
         gu = new GyroUtilities(robot, this, runtime);
         ae = new AutoEncoder(robot,this,runtime);
+        path = new AutoPaths(robot, this, runtime);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        telemetry.addData(">", "null");
-        ae.encoderDrive(.5, 72);
-        au.pause(.3);
-        gu.gyroTurn(.5, -90);
-        au.pause(.3);
-        ae.encoderDrive(.5, 35);
-        au.wobblegrab(OPEN);
-        au.wobblepos(DOWN);
-        au.pause(.3);
-        gu.gyroTurn(.5, 270, 1);
-        au.pause(.3);
-        ae.encoderDrive(-.5, -35);
-        au.pause(.3);
-        au.strafeTime(.5,-90,.75);
+        telemetry.addData(">", "single");
+        path.zero2Park(.5, .4);
 
 }
 }

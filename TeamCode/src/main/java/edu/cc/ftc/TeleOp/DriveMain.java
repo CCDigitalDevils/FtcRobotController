@@ -318,11 +318,11 @@ public class DriveMain extends OpMode{
                 pusher = STATE.ON;
                 trigger2 = STATE.OFF;
                 robot.Servo0.setPosition(shooter1);
-            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == 1 && j >= 75) {
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == shooter1 && j >= 75) {
                 pusher = STATE.OFF;
                 robot.Servo0.setPosition(shooter0);
                 j = 0;
-            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == 1) {
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == shooter1) {
                 j++;
             }
         }

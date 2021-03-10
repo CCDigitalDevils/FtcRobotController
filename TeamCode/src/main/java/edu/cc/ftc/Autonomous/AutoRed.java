@@ -96,9 +96,9 @@ public class AutoRed extends LinearOpMode {
         wu = new WebcamUtilities(robot, this, runtime);
         path = new AutoPaths(robot, this, runtime);
 
+
+
         wu.startCamera();
-
-
         while(!isStarted()){
             label = wu.getLabel();
             if(label.equals("")){

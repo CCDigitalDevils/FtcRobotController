@@ -77,8 +77,8 @@ public class Hardware1
     public WebcamName Webcam1 = null;
     public int tfodMonitorViewId = 0;
 
-    public static final double shooter0 = .75;
-    public static final double shooter1 = 1;
+    public static final double shooter0 = 0;
+    public static final double shooter1 = .25;
     public static final double grab0 = .1;
     public static final double grab1 = .55;
 
