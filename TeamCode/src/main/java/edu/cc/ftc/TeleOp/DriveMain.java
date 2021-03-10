@@ -266,10 +266,13 @@ public class DriveMain extends OpMode{
         {
             if (gamepad1.right_trigger >= .10) {
                 robot.Drive5.setPower(1);
+                robot.Drive6.setPower(1);
             } else if (gamepad1.left_trigger >= .10) {
                 robot.Drive5.setPower(-1);
+                robot.Drive6.setPower(-1);
             } else {
                 robot.Drive5.setPower(0);
+                robot.Drive6.setPower(0);
             }
         }
 
@@ -318,14 +321,16 @@ public class DriveMain extends OpMode{
                 pusher = STATE.ON;
                 trigger2 = STATE.OFF;
                 robot.Servo0.setPosition(shooter1);
-            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == shooter1 && j >= 75) {
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && j >= 40) {
+
                 pusher = STATE.OFF;
                 robot.Servo0.setPosition(shooter0);
                 j = 0;
-            } else if (pusher == STATE.ON && robot.Servo0.getPosition() == shooter1) {
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1) {
                 j++;
             }
         }
+        telemetry.addData(">", robot.Servo0.getPosition() );
 
         //Close wobble grabber
         {
@@ -403,6 +408,8 @@ public class DriveMain extends OpMode{
                 }
             }
         }
+
+
         telemetry.addData("pusher", pusher);
         telemetry.addData("buttonX", trigger2);
         telemetry.addData("push pos", robot.Servo0.getPosition() );

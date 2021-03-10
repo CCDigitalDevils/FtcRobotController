@@ -31,6 +31,7 @@ package edu.cc.ftc.HardwareCC;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -113,7 +114,7 @@ public class Hardware1
         Drive3.setDirection(DcMotor.Direction.REVERSE);
         Drive4.setDirection(DcMotor.Direction.FORWARD);
         Drive5.setDirection(DcMotor.Direction.FORWARD);
-        Drive6.setDirection(DcMotor.Direction.FORWARD);
+        Drive6.setDirection(DcMotor.Direction.REVERSE);
         Drive7.setDirection(DcMotor.Direction.FORWARD);
 
         imu = hwMap.get(BNO055IMU.class, "imu 1");

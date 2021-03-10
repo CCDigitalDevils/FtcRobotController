@@ -10,6 +10,7 @@ import static edu.cc.ftc.Utilities.STATE.DOWN;
 import static edu.cc.ftc.Utilities.STATE.MID;
 import static edu.cc.ftc.Utilities.STATE.OPEN;
 import static edu.cc.ftc.Utilities.STATE.RAISED;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 public class AutoPaths {
     private Hardware1 robot;
@@ -127,5 +128,4 @@ public class AutoPaths {
         au.pause(.3);
         au.strafeTime(driveSpeed,-90,1.25);
     }
-
 }
