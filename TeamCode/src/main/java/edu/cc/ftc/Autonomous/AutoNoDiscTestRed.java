@@ -89,8 +89,8 @@ public class AutoNoDiscTestRed extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        telemetry.addData(">", "single");
-        path.zero1(.5, .4);
+        path.grabWobble();
+        path.zero2Park(.7, .5);
 
 }
 }

@@ -116,37 +116,17 @@ public class AutoRed extends LinearOpMode {
         telemetry.addData(">", label);
         au.laucherStart(.73);
 
-        au.wobblepos(MID);
-        au.pause(.5);
-        au.wobblegrab(CLOSED);
-        au.pause(.5);
-        au.wobblepos(RAISED);
+        path.grabWobble();
 
         //Shoot 3 discs
+        path.shoot3();
 
-        au.pause(.5);
-        au.shoot();
-        au.pause(.5);
-        au.shoot();
-        au.pause(.5);
-        au.shoot();
         au.launcherStop();
 
         //Take path based on ring stack
         if(label == "Single"){
             telemetry.addData(">", "Single");
-            au.strafeTime(.5, -90, 1.25);
-            gu.gyroTurn(.4, 0, 1);
-            au.pause(.3);
-            ae.encoderDrive(.5, 95);
-            au.pause(.3);
-            gu.gyroTurn(.4, -90);
-            au.pause(.3);
-            ae.encoderDrive(.5, 13);
-            au.wobblegrab(OPEN);
-            au.wobblepos(DOWN);
-            au.pause(.3);
-            au.strafeTime(.5, 90, 1.5);
+            path.single2Park(.7,.4);
         }
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
@@ -169,20 +149,7 @@ public class AutoRed extends LinearOpMode {
         }
         else{
             telemetry.addData(">", "null");
-            ae.encoderDrive(.5, 68);
-            au.pause(.3);
-            gu.gyroTurn(.4, -90);
-            au.pause(.3);
-            ae.encoderDrive(.5, 33);
-            au.wobblegrab(OPEN);
-            au.wobblepos(DOWN);
-            au.pause(.3);
-            au.strafeTime(.5, 90, .5);
-            gu.gyroTurn(.4, 270, 1);
-            au.pause(.3);
-            ae.encoderDrive(-.5, -35);
-            au.pause(.3);
-            au.strafeTime(.5,-90,1.25);
+            path.zero2Park(.7, .5);
         }
 
 }

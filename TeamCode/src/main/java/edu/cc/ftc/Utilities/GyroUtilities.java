@@ -64,6 +64,7 @@ public class GyroUtilities {
     public void gyroTurn ( double speed, double angle, double time) {
         Long startTime = System.currentTimeMillis();
         Long duration = 0l;
+        time *= 1000;
 
         // keep looping while we are still active, and not on heading.
         while (linearOpMode.opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF)) {
