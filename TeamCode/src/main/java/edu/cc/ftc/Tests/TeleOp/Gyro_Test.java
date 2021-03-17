@@ -1,4 +1,4 @@
-package edu.cc.ftc.Tests;
+package edu.cc.ftc.Tests.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;

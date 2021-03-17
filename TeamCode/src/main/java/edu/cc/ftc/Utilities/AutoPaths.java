@@ -72,7 +72,7 @@ public class AutoPaths {
 
     public void single1(double driveSpeed, double turnSpeed){
         au.strafeTime(driveSpeed, -90, 1);
-        gu.gyroTurn(turnSpeed, 0, 1);
+        gu.gyroTurn(turnSpeed, 0, .5);
         au.pause(.3);
         ae.encoderDrive(driveSpeed, 95);
         au.pause(.3);
@@ -113,7 +113,7 @@ public class AutoPaths {
         quad1(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, 1);
         au.pause(.3);
-        gu.gyroTurn(turnSpeed, 0, 2);
+        gu.gyroTurn(turnSpeed, 0, .5);
         au.pause(.3);
         ae.encoderDrive(-driveSpeed, -33);
     }
@@ -123,7 +123,7 @@ public class AutoPaths {
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, 0, 2);
         au.strafeTime(driveSpeed, 90, .4);
-        au.strafeTime(driveSpeed, 170, 3);
+        au.strafeTime(driveSpeed, 170, 2.5);
         grabWobble();
         gu.gyroTurn(turnSpeed, 0, 1);
         ae.encoderDrive(driveSpeed, 68);
@@ -168,5 +168,10 @@ public class AutoPaths {
         ae.encoderDrive(driveSpeed, 100);
         gu.gyroTurn(turnSpeed, 270, 2);
         dropWobble();
+    }
+
+    public void quad2Park(double driveSpeed, double turnSpeed){
+        gu.gyroTurn(turnSpeed, 0, 1);
+        ae.encoderDrive(-driveSpeed, -50);
     }
 }

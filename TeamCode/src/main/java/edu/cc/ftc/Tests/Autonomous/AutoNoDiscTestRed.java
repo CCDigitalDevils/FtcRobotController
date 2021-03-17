@@ -1,4 +1,4 @@
-package edu.cc.ftc.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
+package edu.cc.ftc.Tests.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -34,13 +34,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.AutoEncoder;
+import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
-import edu.cc.ftc.Utilities.WebcamUtilities;
 
-import static edu.cc.ftc.Utilities.STATE.CLOSED;
 import static edu.cc.ftc.Utilities.STATE.DOWN;
-import static edu.cc.ftc.Utilities.STATE.MID;
 import static edu.cc.ftc.Utilities.STATE.OPEN;
 
 /**
@@ -64,9 +62,9 @@ import static edu.cc.ftc.Utilities.STATE.OPEN;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Test", group="Test")
-@Disabled
-public class AutoTest extends LinearOpMode {
+@Autonomous(name="Auto No Disc Test Red", group="Red Test")
+//@Disabled
+public class AutoNoDiscTestRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
@@ -75,7 +73,7 @@ public class AutoTest extends LinearOpMode {
     private AutonomousUtilities au;
     private GyroUtilities gu;
     private AutoEncoder ae;
-    private WebcamUtilities wu;
+    private AutoPaths path;
 
     @Override
     public void runOpMode() {
@@ -87,20 +85,12 @@ public class AutoTest extends LinearOpMode {
         au = new AutonomousUtilities(robot, this, runtime);
         gu = new GyroUtilities(robot, this, runtime);
         ae = new AutoEncoder(robot,this,runtime);
-        wu = new WebcamUtilities(robot, this, runtime);
+        path = new AutoPaths(robot, this, runtime);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        gu.gyroTurn(.5, 90);
-        au.pause(1);
-        gu.gyroTurn(.5, 180);
-        au.pause(1);
-        gu.gyroTurn(.5, 270);
-        au.pause(1);
-        gu.gyroTurn(.5, 0);
-        au.pause(1);
-
-
+        path.grabWobble();
+        path.zero2Park(.7, .5);
 
 }
 }

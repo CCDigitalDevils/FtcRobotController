@@ -97,6 +97,7 @@ public class DriveMain extends OpMode{
     private double lifttop;
     private double liftmid2;
     private double wobblepos;
+    private double targetTime;
 
     STATE buttonA1 = STATE.OFF;
     STATE buttonA2 = STATE.OFF;
@@ -121,7 +122,7 @@ public class DriveMain extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = .80;
+        correction = .77;
         maintain = 18;
         pushOut = 1;
         liftmid = .25;
@@ -197,9 +198,9 @@ public class DriveMain extends OpMode{
             //Driver2
             {
                 if (gamepad2.left_bumper) {
-                    turn2 = .35;
+                    turn2 = .40;
                 } else if (gamepad2.right_bumper) {
-                    turn2 = -.35;
+                    turn2 = -.40;
                 }
                 if (gamepad2.dpad_down) {
                     drive2 = -.35;
@@ -218,9 +219,9 @@ public class DriveMain extends OpMode{
         {
             //Driver 1
             {
-                drive1 *= .80;
-                strafe1 *= .90;
-                turn1 *= .80;
+                drive1 *= .85;
+                strafe1 *= .85;
+                turn1 *= .85;
             }
 
             //Driver 2
@@ -321,7 +322,20 @@ public class DriveMain extends OpMode{
                 pusher = STATE.ON;
                 trigger2 = STATE.OFF;
                 robot.Servo0.setPosition(shooter1);
-            } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && j >= 40) {
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && targetTime < System.currentTimeMillis() - 100){
+                targetTime = System.currentTimeMillis() + 175;
+                telemetry.addData(">", "1");
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && System.currentTimeMillis() > targetTime){
+                robot.Servo0.setPosition(shooter0);
+                targetTime = System.currentTimeMillis() + 100;
+                telemetry.addData(">", "2");
+            } else if (pusher == STATE.ON && robot.Servo0.getPosition() <= shooter0 && System.currentTimeMillis() > targetTime){
+                pusher = STATE.OFF;
+            }
+            telemetry.addData(">", targetTime);
+
+
+            /*else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && j >= 35) {
 
                 pusher = STATE.OFF;
                 robot.Servo0.setPosition(shooter0);
@@ -329,6 +343,8 @@ public class DriveMain extends OpMode{
             } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1) {
                 j++;
             }
+
+             */
         }
         telemetry.addData(">", robot.Servo0.getPosition() );
 
@@ -458,7 +474,7 @@ public class DriveMain extends OpMode{
             speed = correction;
         }
         else if (powerShot == STATE.ON){
-            speed = correction * .91;
+            speed = correction * .88;
         }
         else{
             speed = 0;

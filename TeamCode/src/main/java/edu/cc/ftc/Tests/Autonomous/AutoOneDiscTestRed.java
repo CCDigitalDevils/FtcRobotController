@@ -1,4 +1,4 @@
-package edu.cc.ftc.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
+package edu.cc.ftc.Tests.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -34,12 +34,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.AutoEncoder;
+import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 
-import static edu.cc.ftc.Utilities.STATE.CLOSED;
-import static edu.cc.ftc.Utilities.STATE.MID;
-import static edu.cc.ftc.Utilities.STATE.RAISED;
+import static edu.cc.ftc.Utilities.STATE.DOWN;
+import static edu.cc.ftc.Utilities.STATE.OPEN;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -62,17 +62,18 @@ import static edu.cc.ftc.Utilities.STATE.RAISED;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Launch Test", group="Test")
+@Autonomous(name="Auto One Disc Test Red", group="Red Test")
 //@Disabled
-public class AutoLaunchTest extends LinearOpMode {
+public class AutoOneDiscTestRed extends LinearOpMode {
 
     /* Declare OpMode members. */
-    Hardware1 robot = new Hardware1();   // Use a Pushbot's hardware
+    Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
     private GyroUtilities gu;
     private AutoEncoder ae;
+    private AutoPaths path;
 
     @Override
     public void runOpMode() {
@@ -83,22 +84,13 @@ public class AutoLaunchTest extends LinearOpMode {
         robot.init(hardwareMap);
         au = new AutonomousUtilities(robot, this, runtime);
         gu = new GyroUtilities(robot, this, runtime);
-        ae = new AutoEncoder(robot, this, runtime);
+        ae = new AutoEncoder(robot,this,runtime);
+        path = new AutoPaths(robot, this, runtime);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.73);
+        path.grabWobble();
+        path.single2Park(.7, .5);
 
-        au.pause(2);
-
-        //Shoot 3 discs
-
-        au.pause(.5);
-        au.shoot();
-        au.pause(.5);
-        au.shoot();
-        au.pause(.5);
-        au.shoot();
-        au.launcherStop();
-    }
+}
 }

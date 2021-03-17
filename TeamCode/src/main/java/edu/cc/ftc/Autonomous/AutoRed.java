@@ -114,7 +114,7 @@ public class AutoRed extends LinearOpMode {
         waitForStart();
        // label = wu.getLabel();
         telemetry.addData(">", label);
-        au.laucherStart(.73);
+        au.laucherStart(.72);
 
         path.grabWobble();
 

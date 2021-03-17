@@ -1,4 +1,4 @@
-package edu.cc.ftc.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
+package edu.cc.ftc.Tests.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -58,9 +58,9 @@ import edu.cc.ftc.Utilities.GyroUtilities;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Powershot Blue Test", group="Blue")
+@Autonomous(name="Move Test", group="Test")
 @Disabled
-public class AutoPowershotBlueTest extends LinearOpMode {
+public class AutoMoveTest extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
@@ -83,12 +83,7 @@ public class AutoPowershotBlueTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.75);
-        au.pause(1.5);
-        au.shoot();
-        au.strafeTime(.5, 90, .5);
-        au.shoot();
-        au.strafeTime(.5, 90, .5);
-        au.shoot();
+        ae.encoderDrive(.50,24);
+
 }
 }
