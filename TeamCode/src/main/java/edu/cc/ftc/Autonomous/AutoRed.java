@@ -40,6 +40,7 @@ import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 import edu.cc.ftc.Utilities.WebcamUtilities;
 
+import static edu.cc.ftc.HardwareCC.Hardware1.autoLaunchSpeed;
 import static edu.cc.ftc.Utilities.STATE.CLOSED;
 import static edu.cc.ftc.Utilities.STATE.DOWN;
 import static edu.cc.ftc.Utilities.STATE.MID;
@@ -112,9 +113,8 @@ public class AutoRed extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-       // label = wu.getLabel();
         telemetry.addData(">", label);
-        au.laucherStart(.72);
+        au.laucherStart(autoLaunchSpeed);
 
         path.grabWobble();
 
@@ -130,22 +130,7 @@ public class AutoRed extends LinearOpMode {
         }
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
-            au.strafeTime(.5, -90, 1.25);
-            gu.gyroTurn(.4, 0, 1);
-            au.pause(.3);
-            ae.encoderDrive(.5, 126);
-            au.pause(.3);
-            gu.gyroTurn(.4, -90);
-            au.pause(.3);
-            ae.encoderDrive(.5, 43);
-            au.wobblegrab(OPEN);
-            au.wobblepos(DOWN);
-            au.pause(.3);
-            au.strafeTime(.5, 90, 1);
-            au.pause(.3);
-            gu.gyroTurn(.4, 0);
-            au.pause(.3);
-            ae.encoderDrive(-.5, -33);
+            path.quad2Park(.7, .5);
         }
         else{
             telemetry.addData(">", "null");

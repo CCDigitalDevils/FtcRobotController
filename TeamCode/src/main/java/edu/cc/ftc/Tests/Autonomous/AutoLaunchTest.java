@@ -34,9 +34,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.AutoEncoder;
+import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 
+import static edu.cc.ftc.HardwareCC.Hardware1.autoLaunchSpeed;
 import static edu.cc.ftc.Utilities.STATE.CLOSED;
 import static edu.cc.ftc.Utilities.STATE.MID;
 import static edu.cc.ftc.Utilities.STATE.RAISED;
@@ -73,6 +75,7 @@ public class AutoLaunchTest extends LinearOpMode {
     private AutonomousUtilities au;
     private GyroUtilities gu;
     private AutoEncoder ae;
+    private AutoPaths paths;
 
     @Override
     public void runOpMode() {
@@ -84,21 +87,18 @@ public class AutoLaunchTest extends LinearOpMode {
         au = new AutonomousUtilities(robot, this, runtime);
         gu = new GyroUtilities(robot, this, runtime);
         ae = new AutoEncoder(robot, this, runtime);
+        paths = new AutoPaths(robot, this, runtime);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.73);
+        au.laucherStart(autoLaunchSpeed);
 
-        au.pause(2);
+        au.pause(.75);
 
         //Shoot 3 discs
+        paths.shoot3();
 
-        au.pause(.5);
-        au.shoot();
-        au.pause(.5);
-        au.shoot();
-        au.pause(.5);
-        au.shoot();
         au.launcherStop();
+
     }
 }

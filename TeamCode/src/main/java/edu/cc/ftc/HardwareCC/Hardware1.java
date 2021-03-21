@@ -82,6 +82,7 @@ public class Hardware1
     public static final double shooter1 = .25;
     public static final double grab0 = .1;
     public static final double grab1 = .55;
+    public static final double autoLaunchSpeed = .70;
 
 
     /* local OpMode members. */
@@ -116,6 +117,8 @@ public class Hardware1
         Drive5.setDirection(DcMotor.Direction.FORWARD);
         Drive6.setDirection(DcMotor.Direction.REVERSE);
         Drive7.setDirection(DcMotor.Direction.FORWARD);
+
+        Drive4.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         imu = hwMap.get(BNO055IMU.class, "imu 1");
         BNO055IMU.Parameters parameters= new BNO055IMU.Parameters();
