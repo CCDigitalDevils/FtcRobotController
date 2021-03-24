@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
+import edu.cc.ftc.HardwareCC.HardwareAuto;
 import edu.cc.ftc.Utilities.AutoEncoder;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
@@ -63,7 +64,7 @@ import edu.cc.ftc.Utilities.GyroUtilities;
 public class AutoPowershotBlueTest extends LinearOpMode {
 
     /* Declare OpMode members. */
-    Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
+    HardwareAuto robot   = new HardwareAuto();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
@@ -83,7 +84,7 @@ public class AutoPowershotBlueTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(.75);
+        au.launcherStart(.75);
         au.pause(1.5);
         au.shoot();
         au.strafeTime(.5, 90, .5);

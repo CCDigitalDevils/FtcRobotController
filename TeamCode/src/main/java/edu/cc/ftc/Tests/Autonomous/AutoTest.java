@@ -33,7 +33,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
+import edu.cc.ftc.HardwareCC.HardwareAuto;
 import edu.cc.ftc.Utilities.AutoEncoder;
+import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 import edu.cc.ftc.Utilities.WebcamUtilities;
@@ -65,17 +67,18 @@ import static edu.cc.ftc.Utilities.STATE.OPEN;
  */
 
 @Autonomous(name="Auto Test", group="Test")
-@Disabled
+//@Disabled
 public class AutoTest extends LinearOpMode {
 
     /* Declare OpMode members. */
-    Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
+    HardwareAuto robot   = new HardwareAuto();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
     private GyroUtilities gu;
     private AutoEncoder ae;
     private WebcamUtilities wu;
+    private AutoPaths path;
 
     @Override
     public void runOpMode() {
@@ -88,17 +91,16 @@ public class AutoTest extends LinearOpMode {
         gu = new GyroUtilities(robot, this, runtime);
         ae = new AutoEncoder(robot,this,runtime);
         wu = new WebcamUtilities(robot, this, runtime);
+        path = new AutoPaths(robot, this, runtime);
+
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        gu.gyroTurn(.5, 90);
-        au.pause(1);
-        gu.gyroTurn(.5, 180);
-        au.pause(1);
-        gu.gyroTurn(.5, 270);
-        au.pause(1);
-        gu.gyroTurn(.5, 0);
-        au.pause(1);
+        path.grabWobble();
+        path.powerShot(.7, .5, .68);
+        path.quadPower(.7, .5);
+        path.quad2(.7, .5);
+        path.quad2Park(.7, .5);
 
 
 

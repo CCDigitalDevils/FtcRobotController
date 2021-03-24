@@ -72,6 +72,14 @@ public class Hardware1
     public Servo Servo1 = null;
     public Servo Servo2 = null;
     public Servo Servo3 = null;
+    public Servo Servo4 = null;
+    public Servo Servo5 = null;
+    public Servo Servo6 = null;
+    public Servo Servo7 = null;
+    public Servo Servo8 = null;
+    public Servo Servo9 = null;
+    public Servo Servo10 = null;
+    public Servo Servo11 = null;
 
     public BNO055IMU imu = null;
 
@@ -118,7 +126,14 @@ public class Hardware1
         Drive6.setDirection(DcMotor.Direction.REVERSE);
         Drive7.setDirection(DcMotor.Direction.FORWARD);
 
+        Drive0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        Drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        Drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        Drive3.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         Drive4.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Drive5.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        Drive6.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        Drive7.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         imu = hwMap.get(BNO055IMU.class, "imu 1");
         BNO055IMU.Parameters parameters= new BNO055IMU.Parameters();
@@ -159,11 +174,23 @@ public class Hardware1
         Servo1 = hwMap.get(Servo.class, "E.S.1");
         Servo2 = hwMap.get(Servo.class, "E.S.2");
         Servo3 = hwMap.get(Servo.class, "E.S.3");
+        Servo4 = hwMap.get(Servo.class, "E.S.4");
+        Servo5 = hwMap.get(Servo.class, "E.S.5");
+        Servo6 = hwMap.get(Servo.class, "C.S.0");
+        Servo7 = hwMap.get(Servo.class, "C.S.1");
+        Servo8 = hwMap.get(Servo.class, "C.S.2");
+        Servo9 = hwMap.get(Servo.class, "C.S.3");
+        Servo10 = hwMap.get(Servo.class, "C.S.4");
+        Servo11 = hwMap.get(Servo.class, "C.S.5");
+
+
+
 
         Servo0.setPosition(shooter0);
         Servo1.setPosition(0);
         Servo2.setPosition(1);
         Servo3.setPosition(grab0);
+        Servo4.setPosition(0);
 
 
 

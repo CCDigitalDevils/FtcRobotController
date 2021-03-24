@@ -28,20 +28,17 @@ package edu.cc.ftc.Tests.Autonomous;/* Copyright (c) 2017 FIRST. All rights rese
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
+import edu.cc.ftc.HardwareCC.HardwareAuto;
 import edu.cc.ftc.Utilities.AutoEncoder;
 import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
 import edu.cc.ftc.Utilities.GyroUtilities;
 
 import static edu.cc.ftc.HardwareCC.Hardware1.autoLaunchSpeed;
-import static edu.cc.ftc.Utilities.STATE.CLOSED;
-import static edu.cc.ftc.Utilities.STATE.MID;
-import static edu.cc.ftc.Utilities.STATE.RAISED;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -69,7 +66,7 @@ import static edu.cc.ftc.Utilities.STATE.RAISED;
 public class AutoLaunchTest extends LinearOpMode {
 
     /* Declare OpMode members. */
-    Hardware1 robot = new Hardware1();   // Use a Pushbot's hardware
+    HardwareAuto robot = new HardwareAuto();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
@@ -91,7 +88,7 @@ public class AutoLaunchTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.laucherStart(autoLaunchSpeed);
+        au.launcherStart(autoLaunchSpeed);
 
         au.pause(.75);
 

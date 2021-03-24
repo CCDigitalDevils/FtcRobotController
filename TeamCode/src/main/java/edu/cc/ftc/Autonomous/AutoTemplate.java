@@ -32,6 +32,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import edu.cc.ftc.HardwareCC.HardwareAuto;
 import edu.cc.ftc.Utilities.*;
 import edu.cc.ftc.HardwareCC.Hardware1;
 
@@ -61,7 +62,7 @@ import edu.cc.ftc.HardwareCC.Hardware1;
 public class AutoTemplate extends LinearOpMode {
 
     /* Declare OpMode members. */
-    Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
+    HardwareAuto robot   = new HardwareAuto();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
     private AutonomousUtilities au;

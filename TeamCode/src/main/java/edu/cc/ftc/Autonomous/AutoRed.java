@@ -31,9 +31,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import edu.cc.ftc.HardwareCC.Hardware1;
+import edu.cc.ftc.HardwareCC.HardwareAuto;
 import edu.cc.ftc.Utilities.AutoEncoder;
 import edu.cc.ftc.Utilities.AutoPaths;
 import edu.cc.ftc.Utilities.AutonomousUtilities;
@@ -41,11 +40,6 @@ import edu.cc.ftc.Utilities.GyroUtilities;
 import edu.cc.ftc.Utilities.WebcamUtilities;
 
 import static edu.cc.ftc.HardwareCC.Hardware1.autoLaunchSpeed;
-import static edu.cc.ftc.Utilities.STATE.CLOSED;
-import static edu.cc.ftc.Utilities.STATE.DOWN;
-import static edu.cc.ftc.Utilities.STATE.MID;
-import static edu.cc.ftc.Utilities.STATE.OPEN;
-import static edu.cc.ftc.Utilities.STATE.RAISED;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -73,7 +67,7 @@ import static edu.cc.ftc.Utilities.STATE.RAISED;
 public class AutoRed extends LinearOpMode {
 
     /* Declare OpMode members. */
-    Hardware1 robot   = new Hardware1();   // Use a Pushbot's hardware
+    HardwareAuto robot   = new HardwareAuto();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
@@ -114,26 +108,48 @@ public class AutoRed extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         telemetry.addData(">", label);
-        au.laucherStart(autoLaunchSpeed);
-
-        path.grabWobble();
-
-        //Shoot 3 discs
-        path.shoot3();
-
-        au.launcherStop();
 
         //Take path based on ring stack
         if(label == "Single"){
             telemetry.addData(">", "Single");
-            path.single2Park(.7,.4);
+            au.launcherStart(autoLaunchSpeed);
+
+            path.grabWobble();
+
+            path.shoot3();
+
+            au.launcherStop();
+
+            path.single1(.7, .5);
+            path.single2(.7, .5);
+            path.single2Park(.7, .5);
         }
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
+            au.launcherStart(autoLaunchSpeed);
+
+            path.grabWobble();
+
+            path.shoot3();
+
+            au.launcherStop();
+
+            path.quad1(.7, .5);
+            path.quad2(.7, .5);
             path.quad2Park(.7, .5);
         }
         else{
             telemetry.addData(">", "null");
+            au.launcherStart(autoLaunchSpeed);
+
+            path.grabWobble();
+
+            path.shoot3();
+
+            au.launcherStop();
+
+            path.zero1(.7, .5);
+            path.zero2(.7, .5);
             path.zero2Park(.7, .5);
         }
 

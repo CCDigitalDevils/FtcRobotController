@@ -39,7 +39,7 @@ public class AutonomousUtilities {
         }
     }
 
-    public void laucherStart(double speed){
+    public void launcherStart(double speed){
         robot.Drive4.setPower(speed);
     }
 
@@ -49,9 +49,9 @@ public class AutonomousUtilities {
 
     public void shoot(){
         robot.Servo0.setPosition(shooter1);
-        pause(.4);
+        pause(.45);
         robot.Servo0.setPosition(shooter0);
-        pause(.4);
+        pause(.45);
     }
 
     public void jiggle(){

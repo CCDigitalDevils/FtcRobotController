@@ -49,9 +49,9 @@ public class AutoPaths {
     //Grabs a wobble goal and moves it to the high position
     public void grabWobble(){
         au.wobblepos(MID);
-        au.pause(.5);
+        au.pause(.4);
         au.wobblegrab(CLOSED);
-        au.pause(.5);
+        au.pause(.4);
         au.wobblepos(RAISED);
     }
 
@@ -72,13 +72,12 @@ public class AutoPaths {
         au.pause(.3);
         gu.gyroTurn(turnSpeed, -90, 2);
         au.pause(.3);
-        ae.encoderDrive(driveSpeed, 33);
+        ae.encoderDrive(driveSpeed, 35);
         dropWobble();
     }
 
     //Moves from first wobble goal drop point to parking on the center line
     public void zero1Park(double driveSpeed, double turnSpeed){
-        zero1(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, 270, 2);
         au.pause(.3);
@@ -89,7 +88,6 @@ public class AutoPaths {
 
     //Moves from first wobble goal drop point to collect second wobble goal and drop it in the drop point
     public void zero2(double driveSpeed, double turnSpeed){
-        zero1(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, 0, 2);
         au.strafeTime(driveSpeed, 90, .4);
@@ -103,7 +101,6 @@ public class AutoPaths {
 
     //Moves from second wobble goal drop point to parking on the center line
     public void zero2Park(double driveSpeed, double turnSpeed){
-        zero2(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, 270, .5);
         au.pause(.3);
@@ -129,16 +126,14 @@ public class AutoPaths {
 
     //Moves from first wobble goal drop point to parking on the center line
     public void single1Park(double driveSpeed, double turnSpeed){
-        single1(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, 1.5);
     }
 
     //Moves from first wobble goal drop point to collect second wobble goal and drop it in the drop point
     public void single2(double driveSpeed, double turnSpeed){
-        single1(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, 0, 2);
-        au.strafeTime(driveSpeed, 90, 1.25);
+        au.strafeTime(driveSpeed, 90, 1.5);
         gu.gyroTurn(turnSpeed, 0, 1);
         au.strafeTime(driveSpeed, 150, 3);
         grabWobble();
@@ -149,7 +144,6 @@ public class AutoPaths {
 
     //Moves from second wobble goal drop point to parking on the center line
     public void single2Park(double driveSpeed, double turnSpeed){
-        single2(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 150, 1);
     }
 
@@ -170,7 +164,6 @@ public class AutoPaths {
 
     //Moves from first wobble goal drop point to parking on the center line
     public void quad1Park(double driveSpeed, double turnSpeed){
-        quad1(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, 1);
         au.pause(.3);
         gu.gyroTurn(turnSpeed, 0, .5);
@@ -180,10 +173,9 @@ public class AutoPaths {
 
     //Moves from first wobble goal drop point to collect second wobble goal and drop it in the drop point
     public void quad2(double driveSpeed, double turnSpeed){
-        quad1(driveSpeed, turnSpeed);
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, -10, 1);
-        ae.encoderDrive(-driveSpeed, -55);
+        ae.encoderDrive(-driveSpeed, -50);
         gu.gyroTurn(turnSpeed, 0, .5);
         au.strafeTime(driveSpeed, 150, 2);
         grabWobble();
@@ -194,8 +186,45 @@ public class AutoPaths {
 
     //Moves from second wobble goal drop point to parking on the center line
     public void quad2Park(double driveSpeed, double turnSpeed){
-        quad2(driveSpeed, turnSpeed);
         gu.gyroTurn(turnSpeed, 0, 1.5);
         ae.encoderDrive(-driveSpeed, -27);
+    }
+
+    public void powerShot(double driveSpeed, double turnSpeed, double launchSpeed){
+        gu.gyroTurn(turnSpeed, 16, 1);
+        ae.encoderDrive(driveSpeed, 63);
+        au.launcherStart(launchSpeed);
+        gu.gyroTurn(turnSpeed, 9, 1);
+        au.pause(.5);
+        au.shoot();
+        gu.gyroTurn(turnSpeed, 0, .5);
+        au.shoot();
+        gu.gyroTurn(turnSpeed, -6, .5);
+        au.shoot();
+        au.pause(.25);
+        au.launcherStop();
+    }
+
+    public void zeroPower(double driveSpeed, double turnSpeed){
+        gu.gyroTurn(turnSpeed, 0, .5);
+        ae.encoderDrive(driveSpeed, 3);
+        gu.gyroTurn(turnSpeed, -90, 1);
+        ae.encoderDrive(driveSpeed, 50);
+        dropWobble();
+    }
+
+    public void singlePower(double driveSpeed, double turnSpeed){
+        gu.gyroTurn(turnSpeed, 0, .5);
+        ae.encoderDrive(driveSpeed, 23);
+        gu.gyroTurn(turnSpeed, -90, 1);
+        ae.encoderDrive(driveSpeed, 15);
+        dropWobble();
+    }
+    public void quadPower(double driveSpeed, double turnSpeed){
+        gu.gyroTurn(turnSpeed, 0, .5);
+        ae.encoderDrive(driveSpeed, 53);
+        gu.gyroTurn(turnSpeed, -90, 1);
+        ae.encoderDrive(driveSpeed, 48);
+        dropWobble();
     }
 }
