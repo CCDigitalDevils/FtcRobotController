@@ -97,7 +97,7 @@ public class AutoTest extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         path.grabWobble();
-        path.powerShot(.7, .5, .68);
+        path.powerShot(.7, .5, .67);
         path.quadPower(.7, .5);
         path.quad2(.7, .5);
         path.quad2Park(.7, .5);

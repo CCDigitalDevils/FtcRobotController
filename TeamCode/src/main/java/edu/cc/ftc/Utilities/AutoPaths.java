@@ -195,7 +195,7 @@ public class AutoPaths {
         ae.encoderDrive(driveSpeed, 63);
         au.launcherStart(launchSpeed);
         gu.gyroTurn(turnSpeed, 9, 1);
-        au.pause(.5);
+        au.pause(.75);
         au.shoot();
         gu.gyroTurn(turnSpeed, 0, .5);
         au.shoot();
