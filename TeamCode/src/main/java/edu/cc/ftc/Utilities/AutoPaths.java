@@ -132,9 +132,9 @@ public class AutoPaths {
     //Moves from first wobble goal drop point to collect second wobble goal and drop it in the drop point
     public void single2(double driveSpeed, double turnSpeed){
         au.strafeTime(driveSpeed, 90, .5);
-        gu.gyroTurn(turnSpeed, 0, 2);
-        au.strafeTime(driveSpeed, 90, 1.5);
         gu.gyroTurn(turnSpeed, 0, 1);
+        au.strafeTime(driveSpeed, 90, 1.5);
+        gu.gyroTurn(turnSpeed, 0, .5);
         au.strafeTime(driveSpeed, 150, 3);
         grabWobble();
         ae.encoderDrive(driveSpeed, 104);
@@ -221,10 +221,43 @@ public class AutoPaths {
         dropWobble();
     }
     public void quadPower(double driveSpeed, double turnSpeed){
-        gu.gyroTurn(turnSpeed, 0, .5);
-        ae.encoderDrive(driveSpeed, 53);
+        gu.gyroTurn(turnSpeed, -20, .5);
+        ae.encoderDrive(driveSpeed, 60);
         gu.gyroTurn(turnSpeed, -90, 1);
-        ae.encoderDrive(driveSpeed, 48);
+        ae.encoderDrive(driveSpeed, 25);
         dropWobble();
+    }
+
+    public void singlePickup(double driveSpeed, double turnSpeed, double launchSpeed){
+        gu.gyroTurn(turnSpeed, -13, 1);
+        au.loaderStart();
+        ae.encoderDrive(-driveSpeed, -60);
+        gu.gyroTurn(turnSpeed, 0, 1);
+        ae.encoderDrive(driveSpeed, 18);
+        au.pause(.25);
+        au.launcherStart(launchSpeed);
+        gu.gyroTurn(turnSpeed, 0, .5);
+        au.pause(.25);
+        au.loaderStop();
+        au.shoot();
+        ae.encoderDrive(driveSpeed, 8);
+        au.launcherStop();
+    }
+
+    public void quadPickup(double driveSpeed, double turnSpeed, double launchSpeed){
+        gu.gyroTurn(turnSpeed, -13, 1);
+        au.barDown();
+        au.loaderStart();
+        ae.encoderDrive(-driveSpeed, -80);
+        gu.gyroTurn(turnSpeed, 10, 1);
+        ae.encoderDrive(driveSpeed, 15);
+        au.launcherStart(launchSpeed);
+        gu.gyroTurn(turnSpeed, 0, .5);
+        au.barUp();
+        au.loaderStop();
+        shoot3();
+        ae.encoderDrive(driveSpeed, 8);
+        au.launcherStop();
+
     }
 }

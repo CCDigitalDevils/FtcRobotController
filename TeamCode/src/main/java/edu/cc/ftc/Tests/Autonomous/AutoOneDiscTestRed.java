@@ -94,7 +94,7 @@ public class AutoOneDiscTestRed extends LinearOpMode {
         path.powerShot(.7, .5, .66);
         path.singlePower(.7, .5);
         path.single2(.7, .5);
-        path.single2Park(.7, .5);
+        path.singlePickup(.7, .5, .75);
 
 }
 }

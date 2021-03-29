@@ -90,6 +90,10 @@ public class Hardware1
     public static final double shooter1 = .25;
     public static final double grab0 = .1;
     public static final double grab1 = .55;
+    public static final double fixer0 = 0.01;
+    public static final double fixer1 = .30;
+    public static final double bar0 = 0;
+    public static final double bar1 = .5;
     public static final double autoLaunchSpeed = .70;
 
 
@@ -190,7 +194,8 @@ public class Hardware1
         Servo1.setPosition(0);
         Servo2.setPosition(1);
         Servo3.setPosition(grab0);
-        Servo4.setPosition(0);
+        Servo4.setPosition(fixer0);
+        Servo5.setPosition(bar0);
 
 
 

@@ -51,7 +51,7 @@ public class GyroUtilities {
      *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
      *                   If a relative angle is required, add/subtract from current heading.
      */
-    public void gyroTurn ( double speed, double angle) {
+    private void gyroTurn ( double speed, double angle) {
         DcMotor.RunMode originalMode0 = robot.Drive0.getMode();
         DcMotor.RunMode originalMode1 = robot.Drive1.getMode();
         robot.Drive0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

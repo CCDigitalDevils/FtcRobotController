@@ -28,6 +28,7 @@ package edu.cc.ftc.Autonomous;/* Copyright (c) 2017 FIRST. All rights reserved.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -63,7 +64,7 @@ import static edu.cc.ftc.HardwareCC.Hardware1.autoLaunchSpeed;
  */
 
 @Autonomous(name="Auto Red", group="Red")
-//@Disabled
+@Disabled
 public class AutoRed extends LinearOpMode {
 
     /* Declare OpMode members. */

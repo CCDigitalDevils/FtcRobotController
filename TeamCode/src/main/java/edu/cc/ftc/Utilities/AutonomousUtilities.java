@@ -6,6 +6,10 @@ import com.qualcomm.robotcore.util.Range;
 
 import edu.cc.ftc.HardwareCC.Hardware1;
 
+import static edu.cc.ftc.HardwareCC.Hardware1.bar0;
+import static edu.cc.ftc.HardwareCC.Hardware1.bar1;
+import static edu.cc.ftc.HardwareCC.Hardware1.fixer0;
+import static edu.cc.ftc.HardwareCC.Hardware1.fixer1;
 import static edu.cc.ftc.HardwareCC.Hardware1.grab0;
 import static edu.cc.ftc.HardwareCC.Hardware1.grab1;
 import static edu.cc.ftc.HardwareCC.Hardware1.shooter0;
@@ -47,11 +51,37 @@ public class AutonomousUtilities {
         robot.Drive4.setPower(0);
     }
 
+    public void loaderStart(){
+        robot.Drive5.setPower(1);
+        robot.Drive6.setPower(1);
+    }
+
+    public void loaderStop(){
+        robot.Drive5.setPower(0);
+        robot.Drive6.setPower(0);
+    }
+
+    public void barDown(){
+        robot.Servo5.setPosition(bar1);
+    }
+
+    public void barUp(){
+        robot.Servo5.setPosition(bar0);
+    }
+
     public void shoot(){
         robot.Servo0.setPosition(shooter1);
         pause(.45);
         robot.Servo0.setPosition(shooter0);
-        pause(.45);
+        fix();
+    }
+
+    public void fix(){
+        pause(.1);
+        robot.Servo4.setPosition(fixer1);
+        pause(.3);
+        robot.Servo4.setPosition(fixer0);
+
     }
 
     public void jiggle(){

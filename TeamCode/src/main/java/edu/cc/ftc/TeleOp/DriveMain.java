@@ -37,6 +37,8 @@ import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.RPM;
 import edu.cc.ftc.Utilities.STATE;
 
+import static edu.cc.ftc.HardwareCC.Hardware1.fixer0;
+import static edu.cc.ftc.HardwareCC.Hardware1.fixer1;
 import static edu.cc.ftc.HardwareCC.Hardware1.grab0;
 import static edu.cc.ftc.HardwareCC.Hardware1.grab1;
 import static edu.cc.ftc.HardwareCC.Hardware1.shooter0;
@@ -98,6 +100,7 @@ public class DriveMain extends OpMode{
     private double liftmid2;
     private double wobblepos;
     private double targetTime;
+    private double fixerTime;
 
     STATE buttonA1 = STATE.OFF;
     STATE buttonA2 = STATE.OFF;
@@ -105,12 +108,14 @@ public class DriveMain extends OpMode{
     STATE buttonX1 = STATE.OFF;
     STATE buttonX2 = STATE.OFF;
     STATE buttonY1 = STATE.OFF;
+    STATE buttonY2 = STATE.OFF;
     STATE trigger2 = STATE.OFF;
     STATE grab = STATE.OFF;
     STATE pusher = STATE.OFF;
     STATE launcher = STATE.OFF;
     STATE wobble = STATE.DOWN;
     STATE powerShot = STATE.OFF;
+    STATE fixer = STATE.OFF;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -122,7 +127,7 @@ public class DriveMain extends OpMode{
          */
         robot.init(hardwareMap);
 
-        correction = .77;
+        correction = .78;
         maintain = 18;
         pushOut = 1;
         liftmid = .25;
@@ -219,9 +224,9 @@ public class DriveMain extends OpMode{
         {
             //Driver 1
             {
-                drive1 *= .85;
-                strafe1 *= .85;
-                turn1 *= .85;
+                drive1 *= .90;
+                strafe1 *= .90;
+                turn1 *= .90;
             }
 
             //Driver 2
@@ -324,15 +329,38 @@ public class DriveMain extends OpMode{
                 robot.Servo0.setPosition(shooter1);
             } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && targetTime < System.currentTimeMillis() - 100){
                 targetTime = System.currentTimeMillis() + 175;
-                telemetry.addData(">", "1");
             } else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && System.currentTimeMillis() > targetTime){
                 robot.Servo0.setPosition(shooter0);
                 targetTime = System.currentTimeMillis() + 100;
-                telemetry.addData(">", "2");
-            } else if (pusher == STATE.ON && robot.Servo0.getPosition() <= shooter0 && System.currentTimeMillis() > targetTime){
+                robot.Servo4.setPosition(fixer1);
+            } else if (pusher == STATE.ON && fixer == STATE.OFF && robot.Servo0.getPosition() <= shooter0 && System.currentTimeMillis() > targetTime){
+                targetTime = System.currentTimeMillis() + 100;
+                telemetry.addData(">", "1");
+                fixer = STATE.ON;
+            }else if (pusher == STATE.ON && fixer == STATE.ON && robot.Servo4.getPosition() >= fixer1 && System.currentTimeMillis() > targetTime){
                 pusher = STATE.OFF;
+                fixer = STATE.OFF;
+                robot.Servo4.setPosition(fixer0);
+                telemetry.addData(">", "2");
             }
-            telemetry.addData(">", targetTime);
+
+            //Disc fixer controls
+            {
+                if (gamepad2.y && fixer == STATE.OFF && buttonY2 == STATE.OFF) {
+                    buttonY2 = STATE.INPROGRESS;
+                } else if (gamepad2.y && fixer == STATE.OFF && buttonY2 == STATE.INPROGRESS) {
+                    fixer = STATE.ON;
+                    buttonY2 = STATE.OFF;
+                    robot.Servo4.setPosition(fixer1);
+                } else if (fixer == STATE.ON && robot.Servo4.getPosition() >= fixer1 && fixerTime < System.currentTimeMillis() - 100){
+                    fixerTime = System.currentTimeMillis() + 175;
+                } else if (fixer == STATE.ON && robot.Servo4.getPosition() >= fixer1 && System.currentTimeMillis() > fixerTime){
+                    robot.Servo4.setPosition(fixer0);
+                    fixerTime = System.currentTimeMillis() + 100;
+                } else if (fixer == STATE.ON && robot.Servo4.getPosition() <= fixer0 && System.currentTimeMillis() > fixerTime){
+                    fixer = STATE.OFF;
+                }
+            }
 
 
             /*else if (pusher == STATE.ON && robot.Servo0.getPosition() >= shooter1 && j >= 35) {
@@ -346,7 +374,6 @@ public class DriveMain extends OpMode{
 
              */
         }
-        telemetry.addData(">", robot.Servo0.getPosition() );
 
         //Close wobble grabber
         {
@@ -426,15 +453,9 @@ public class DriveMain extends OpMode{
         }
 
 
-        telemetry.addData("pusher", pusher);
-        telemetry.addData("buttonX", trigger2);
-        telemetry.addData("push pos", robot.Servo0.getPosition() );
 
+/*
         pos = robot.Drive4.getCurrentPosition();
-
-        telemetry.addData("spin speed", spin);
-        telemetry.addData("position", pos);
-
         encoderF = robot.Drive4.getCurrentPosition();
         timeF = System.currentTimeMillis();
         encoder = encoderF - encoderI;
@@ -447,7 +468,7 @@ public class DriveMain extends OpMode{
 
 
         telemetry.addData("Ticks per code cycle = ", encoder);
-/*
+
         if (launcher == STATE.ON && encoderMili > maintain + 2){
             correction = correction - .0005;
         }
@@ -461,7 +482,6 @@ public class DriveMain extends OpMode{
             i = 0;
         }
 */
-        telemetry.addData("correction = ", correction);
 
         correction = Range.clip(correction, 0, 1);
 
