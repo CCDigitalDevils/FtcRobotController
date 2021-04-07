@@ -93,7 +93,7 @@ public class Hardware1
     public static final double fixer0 = 0.01;
     public static final double fixer1 = .30;
     public static final double bar0 = 0;
-    public static final double bar1 = .5;
+    public static final double bar1 = .51;
     public static final double autoLaunchSpeed = .70;
 
 

@@ -36,11 +36,11 @@ public class AutoPaths {
 
     //Shoots 3 discs
     public void shoot3 () {
-        au.pause(.3);
+        au.pause(.25);
         au.shoot();
-        au.pause(.3);
+        au.pause(.25);
         au.shoot();
-        au.pause(.3);
+        au.pause(.25);
         au.shoot();
     }
 
@@ -177,8 +177,11 @@ public class AutoPaths {
         gu.gyroTurn(turnSpeed, -10, 1);
         ae.encoderDrive(-driveSpeed, -50);
         gu.gyroTurn(turnSpeed, 0, .5);
-        au.strafeTime(driveSpeed, 150, 2);
+        gu.gyroTurn(turnSpeed, 0, .5);
+        au.strafeTime(driveSpeed, 155, 1.8);
         grabWobble();
+        gu.gyroTurn(turnSpeed, 0, .5);
+        gu.gyroTurn(turnSpeed, 0, .5);
         ae.encoderDrive(driveSpeed, 110);
         gu.gyroTurn(turnSpeed, 270, 2);
         dropWobble();
@@ -192,13 +195,16 @@ public class AutoPaths {
 
     public void powerShot(double driveSpeed, double turnSpeed, double launchSpeed){
         gu.gyroTurn(turnSpeed, 16, 1);
-        ae.encoderDrive(driveSpeed, 63);
+        ae.encoderDrive(driveSpeed, 62);
         au.launcherStart(launchSpeed);
-        gu.gyroTurn(turnSpeed, 9, 1);
-        au.pause(.75);
+        gu.gyroTurn(turnSpeed, 9, .5);
+        gu.gyroTurn(turnSpeed, 9, .5);
+        au.pause(.5);
         au.shoot();
         gu.gyroTurn(turnSpeed, 0, .5);
+        gu.gyroTurn(turnSpeed, 0, .25);
         au.shoot();
+        gu.gyroTurn(turnSpeed, -6, .5);
         gu.gyroTurn(turnSpeed, -6, .5);
         au.shoot();
         au.pause(.25);
@@ -222,9 +228,9 @@ public class AutoPaths {
     }
     public void quadPower(double driveSpeed, double turnSpeed){
         gu.gyroTurn(turnSpeed, -20, .5);
-        ae.encoderDrive(driveSpeed, 60);
+        ae.encoderDrive(driveSpeed, 57);
         gu.gyroTurn(turnSpeed, -90, 1);
-        ae.encoderDrive(driveSpeed, 25);
+        ae.encoderDrive(driveSpeed, 22);
         dropWobble();
     }
 
@@ -245,18 +251,20 @@ public class AutoPaths {
     }
 
     public void quadPickup(double driveSpeed, double turnSpeed, double launchSpeed){
-        gu.gyroTurn(turnSpeed, -13, 1);
+        gu.gyroTurn(turnSpeed, -25, 1);
         au.barDown();
         au.loaderStart();
-        ae.encoderDrive(-driveSpeed, -80);
-        gu.gyroTurn(turnSpeed, 10, 1);
-        ae.encoderDrive(driveSpeed, 15);
+        ae.encoderDrive(-1, -55);
+        ae.encoderDrive(-driveSpeed * .30, -24);
+        au.barUp();
+        gu.gyroTurn(turnSpeed,-17, 1);
+        ae.encoderDrive(driveSpeed, 28);
         au.launcherStart(launchSpeed);
         gu.gyroTurn(turnSpeed, 0, .5);
-        au.barUp();
+        gu.gyroTurn(turnSpeed, 0, .5);
         au.loaderStop();
         shoot3();
-        ae.encoderDrive(driveSpeed, 8);
+        ae.encoderDrive(driveSpeed, 12);
         au.launcherStop();
 
     }
