@@ -119,11 +119,11 @@ public class AutoRedPowerShot extends LinearOpMode {
         }
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
-                path.grabWobble();
-                path.powerShot(.7, .5, .66);
-                path.quadPower(.7, .5);
-                path.quad2(.7, .5);
-                path.quad2Park(.7, .5);
+            path.grabWobble();
+            path.powerShot(1, .5, .65);
+            path.quadPower(1, .5);
+            path.quad2(1, .5);
+            path.quadPickup(1, .5, .85);
 
         }
         else{

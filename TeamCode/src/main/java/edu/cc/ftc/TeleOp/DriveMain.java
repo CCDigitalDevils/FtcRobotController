@@ -37,6 +37,8 @@ import edu.cc.ftc.HardwareCC.Hardware1;
 import edu.cc.ftc.Utilities.RPM;
 import edu.cc.ftc.Utilities.STATE;
 
+import static edu.cc.ftc.HardwareCC.Hardware1.bar0;
+import static edu.cc.ftc.HardwareCC.Hardware1.bar1;
 import static edu.cc.ftc.HardwareCC.Hardware1.fixer0;
 import static edu.cc.ftc.HardwareCC.Hardware1.fixer1;
 import static edu.cc.ftc.HardwareCC.Hardware1.grab0;
@@ -106,6 +108,7 @@ public class DriveMain extends OpMode{
     STATE buttonA2 = STATE.OFF;
     STATE buttonB1 = STATE.OFF;
     STATE buttonX1 = STATE.OFF;
+    STATE buttonR1 = STATE.OFF;
     STATE buttonX2 = STATE.OFF;
     STATE buttonY1 = STATE.OFF;
     STATE buttonY2 = STATE.OFF;
@@ -116,6 +119,8 @@ public class DriveMain extends OpMode{
     STATE wobble = STATE.DOWN;
     STATE powerShot = STATE.OFF;
     STATE fixer = STATE.OFF;
+    STATE bar = STATE.OFF;
+
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -373,6 +378,23 @@ public class DriveMain extends OpMode{
             }
 
              */
+        }
+
+        {
+            if (gamepad1.right_stick_button && bar == STATE.OFF && buttonR1 == STATE.OFF) {
+                buttonR1 = STATE.INPROGRESS;
+            } else if (!gamepad1.right_stick_button && buttonR1 == STATE.INPROGRESS && bar == STATE.OFF) {
+                bar = STATE.ON;
+                buttonR1 = STATE.OFF;
+                robot.Servo5.setPosition(bar1);
+            }
+            if (gamepad1.right_stick_button && bar == STATE.ON && buttonR1 == STATE.OFF) {
+                buttonR1 = STATE.INPROGRESS;
+            } else if (!gamepad1.right_stick_button && buttonR1 == STATE.INPROGRESS && bar == STATE.ON) {
+                bar = STATE.OFF;
+                buttonR1 = STATE.OFF;
+                robot.Servo5.setPosition(bar0);
+            }
         }
 
         //Close wobble grabber
