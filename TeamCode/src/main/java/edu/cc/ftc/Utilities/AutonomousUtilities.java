@@ -71,7 +71,7 @@ public class AutonomousUtilities {
 
     public void shoot(){
         robot.Servo0.setPosition(shooter1);
-        pause(.45);
+        pause(.25);
         robot.Servo0.setPosition(shooter0);
         fix();
     }
@@ -79,7 +79,7 @@ public class AutonomousUtilities {
     public void fix(){
         pause(.1);
         robot.Servo4.setPosition(fixer1);
-        pause(.3);
+        pause(.2);
         robot.Servo4.setPosition(fixer0);
 
     }

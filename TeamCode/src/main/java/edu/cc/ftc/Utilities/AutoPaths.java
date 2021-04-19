@@ -36,11 +36,11 @@ public class AutoPaths {
 
     //Shoots 3 discs
     public void shoot3 () {
-        au.pause(.25);
+        au.pause(.15);
         au.shoot();
-        au.pause(.25);
+        au.pause(.15);
         au.shoot();
-        au.pause(.25);
+        au.pause(.15);
         au.shoot();
     }
 

@@ -96,17 +96,17 @@ public class AutoTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.barDown();
+        au.shoot();
         au.pause(1);
-        au.barUp();
+        au.shoot();
         au.pause(1);
-        au.barDown();
+        au.shoot();
         au.pause(1);
-        au.barUp();
+        au.shoot();
         au.pause(1);
-        au.barDown();
+        au.shoot();
         au.pause(1);
-        au.barUp();
+        au.shoot();
         au.pause(1);
 
 

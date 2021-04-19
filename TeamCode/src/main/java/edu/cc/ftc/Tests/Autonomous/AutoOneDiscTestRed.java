@@ -91,10 +91,10 @@ public class AutoOneDiscTestRed extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         path.grabWobble();
-        path.powerShot(.7, .5, .66);
-        path.singlePower(.7, .5);
-        path.single2(.7, .5);
-        path.singlePickup(.7, .5, .75);
+        path.powerShot(.8, .5, .66);
+        path.singlePower(.8, .5);
+        path.single2(.8, .5);
+        path.singlePickup(.8, .5, .75);
 
 }
 }

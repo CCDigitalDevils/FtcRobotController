@@ -112,27 +112,27 @@ public class AutoRedPowerShot extends LinearOpMode {
         if(label == "Single"){
             telemetry.addData(">", "Single");
             path.grabWobble();
-            path.powerShot(.7, .5, .65);
-            path.singlePower(.7, .5);
-            path.single2(.7, .5);
-            path.singlePickup(.7, .5, .75);
+            path.powerShot(.8, .5, .66);
+            path.singlePower(.8, .5);
+            path.single2(.8, .5);
+            path.singlePickup(.8, .5, .75);
         }
         else if(label == "Quad"){
             telemetry.addData(">", "Quad");
             path.grabWobble();
-            path.powerShot(1, .5, .65);
+            path.powerShot(1, .5, .64);
             path.quadPower(1, .5);
             path.quad2(1, .5);
-            path.quadPickup(1, .5, .85);
+            path.quadPickup(1, .5, .74);
 
         }
         else{
             telemetry.addData(">", "null");
             path.grabWobble();
-            path.powerShot(.7, .5, .66);
-            path.zeroPower(.7, .5);
-            path.zero2(.7, .5);
-            path.zero2Park(.7, .5);
+            path.powerShot(.8, .5, .66);
+            path.zeroPower(.8, .5);
+            path.zero2(.8, .5);
+            path.zero2Park(.8, .5);
         }
 
 }
