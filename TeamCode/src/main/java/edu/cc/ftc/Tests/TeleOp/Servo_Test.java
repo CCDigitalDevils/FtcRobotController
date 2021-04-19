@@ -87,14 +87,14 @@ public class Servo_Test extends OpMode {
                 servoPos = robot.Servo4.getPosition();
             }
         }
-        if(currentServo == 5){
+        if(currentServo == 11){
             if(gamepad1.right_trigger > 0){
-                robot.Servo5.setPosition(robot.Servo5.getPosition() + servoChange);
-                servoPos = robot.Servo5.getPosition();
+                robot.Servo11.setPosition(robot.Servo11.getPosition() + servoChange);
+                servoPos = robot.Servo11.getPosition();
             }
             else if(gamepad1.left_trigger > 0){
-                robot.Servo5.setPosition(robot.Servo5.getPosition() - servoChange);
-                servoPos = robot.Servo5.getPosition();
+                robot.Servo11.setPosition(robot.Servo11.getPosition() - servoChange);
+                servoPos = robot.Servo11.getPosition();
             }
         }
 

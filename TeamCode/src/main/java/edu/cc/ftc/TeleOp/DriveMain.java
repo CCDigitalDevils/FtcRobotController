@@ -386,14 +386,14 @@ public class DriveMain extends OpMode{
             } else if (!gamepad1.right_stick_button && buttonR1 == STATE.INPROGRESS && bar == STATE.OFF) {
                 bar = STATE.ON;
                 buttonR1 = STATE.OFF;
-                robot.Servo5.setPosition(bar1);
+                robot.Servo11.setPosition(bar1);
             }
             if (gamepad1.right_stick_button && bar == STATE.ON && buttonR1 == STATE.OFF) {
                 buttonR1 = STATE.INPROGRESS;
             } else if (!gamepad1.right_stick_button && buttonR1 == STATE.INPROGRESS && bar == STATE.ON) {
                 bar = STATE.OFF;
                 buttonR1 = STATE.OFF;
-                robot.Servo5.setPosition(bar0);
+                robot.Servo11.setPosition(bar0);
             }
         }
 

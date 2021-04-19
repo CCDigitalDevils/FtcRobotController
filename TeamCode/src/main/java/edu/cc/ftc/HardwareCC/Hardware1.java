@@ -93,7 +93,7 @@ public class Hardware1
     public static final double fixer0 = 0.01;
     public static final double fixer1 = .30;
     public static final double bar0 = .05;
-    public static final double bar1 = .51;
+    public static final double bar1 = .56;
     public static final double autoLaunchSpeed = .70;
 
 
@@ -195,7 +195,7 @@ public class Hardware1
         Servo2.setPosition(1);
         Servo3.setPosition(grab0);
         Servo4.setPosition(fixer0);
-        Servo5.setPosition(bar0);
+        Servo11.setPosition(bar0);
 
 
 

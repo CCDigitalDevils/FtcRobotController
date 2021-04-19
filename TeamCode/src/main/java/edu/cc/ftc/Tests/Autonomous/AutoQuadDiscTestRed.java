@@ -91,10 +91,10 @@ public class AutoQuadDiscTestRed extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         path.grabWobble();
-        path.powerShot(1, .5, .63);
+        path.powerShot(1, .5, .64);
         path.quadPower(1, .5);
         path.quad2(1, .5);
-        path.quadPickup(1, .5, .85);
+        path.quadPickup(1, .5, .74);
 
 }
 }

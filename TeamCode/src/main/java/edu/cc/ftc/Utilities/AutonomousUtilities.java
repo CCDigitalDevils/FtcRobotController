@@ -62,11 +62,11 @@ public class AutonomousUtilities {
     }
 
     public void barDown(){
-        robot.Servo5.setPosition(bar1);
+        robot.Servo11.setPosition(bar1);
     }
 
     public void barUp(){
-        robot.Servo5.setPosition(bar0);
+        robot.Servo11.setPosition(bar0);
     }
 
     public void shoot(){
