@@ -229,9 +229,9 @@ public class DriveMain extends OpMode{
         {
             //Driver 1
             {
-                drive1 *= .90;
-                strafe1 *= .90;
-                turn1 *= .90;
+                drive1 *= .95;
+                strafe1 *= 95;
+                turn1 *= .95;
             }
 
             //Driver 2

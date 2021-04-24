@@ -112,7 +112,7 @@ public class AutoRedPowerShot extends LinearOpMode {
         if(label == "Single"){
             telemetry.addData(">", "Single");
             path.grabWobble();
-            path.powerShot(.8, .5, .66);
+            path.powerShot(.8, .5, .64);
             path.singlePower(.8, .5);
             path.single2(.8, .5);
             path.singlePickup(.8, .5, .75);
@@ -129,7 +129,7 @@ public class AutoRedPowerShot extends LinearOpMode {
         else{
             telemetry.addData(">", "null");
             path.grabWobble();
-            path.powerShot(.8, .5, .66);
+            path.powerShot(.8, .5, .64);
             path.zeroPower(.8, .5);
             path.zero2(.8, .5);
             path.zero2Park(.8, .5);

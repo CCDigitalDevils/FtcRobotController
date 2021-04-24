@@ -91,11 +91,13 @@ public class AutoPaths {
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, 0, 2);
         au.strafeTime(driveSpeed, 90, .4);
-        au.strafeTime(driveSpeed, 170, 2.5);
+        au.strafeTime(driveSpeed, 170, 2.25);
         grabWobble();
-        gu.gyroTurn(turnSpeed, 0, 1);
+        gu.gyroTurn(turnSpeed, 0, .25);
+        au.pause(.1);
         ae.encoderDrive(driveSpeed, 65);
-        gu.gyroTurn(turnSpeed, 270, 2);
+        au.pause(.1);
+        gu.gyroTurn(turnSpeed, 270, 1);
         dropWobble();
     }
 
@@ -103,9 +105,9 @@ public class AutoPaths {
     public void zero2Park(double driveSpeed, double turnSpeed){
         au.strafeTime(driveSpeed, 90, .5);
         gu.gyroTurn(turnSpeed, 270, .5);
-        au.pause(.3);
+        au.pause(.1);
         ae.encoderDrive(-driveSpeed, -20);
-        au.pause(.3);
+        au.pause(.1);
         au.strafeTime(driveSpeed,-90,1);
     }
 
@@ -135,7 +137,8 @@ public class AutoPaths {
         gu.gyroTurn(turnSpeed, 0, 1);
         au.strafeTime(driveSpeed, 90, 1.5);
         gu.gyroTurn(turnSpeed, 0, .5);
-        au.strafeTime(driveSpeed, 150, 3);
+        au.strafeTime(driveSpeed, 150, 2.5);
+        gu.gyroTurn(turnSpeed, 0, .25);
         grabWobble();
         ae.encoderDrive(driveSpeed, 104);
         au.strafeTime(driveSpeed, -90, .65);
@@ -179,12 +182,14 @@ public class AutoPaths {
         gu.gyroTurn(turnSpeed, 0, .5);
         au.pause(.1);
         gu.gyroTurn(turnSpeed, 0, .5);
-        au.strafeTime(driveSpeed, 160, 1.5);
+        au.strafeTime(driveSpeed, 160, 1.6);
+        gu.gyroTurn(turnSpeed, 0, .25);
         grabWobble();
         gu.gyroTurn(turnSpeed, 0, .25);
         ae.encoderDrive(driveSpeed, 110);
+        au.pause(.1);
         gu.gyroTurn(turnSpeed, 270, 1);
-        au.pause(.05);
+        au.pause(.1);
         dropWobble();
     }
 
@@ -195,21 +200,21 @@ public class AutoPaths {
     }
 
     public void powerShot(double driveSpeed, double turnSpeed, double launchSpeed){
-        gu.gyroTurn(turnSpeed, 16, 1);
+        gu.gyroTurn(turnSpeed, 18, .5);
         ae.encoderDrive(driveSpeed, 60);
         au.launcherStart(launchSpeed);
-        gu.gyroTurn(turnSpeed, 6, .5);
+        gu.gyroTurn(turnSpeed, 4, .5);
         au.pause(.1);
-        gu.gyroTurn(turnSpeed, 6, .5);
+        gu.gyroTurn(turnSpeed, 4, .5);
         au.pause(.5);
         au.shoot();
         gu.gyroTurn(turnSpeed, 0, .5);
         au.pause(.1);
         gu.gyroTurn(turnSpeed, 0, .25);
         au.shoot();
-        gu.gyroTurn(turnSpeed, -6, .5);
+        gu.gyroTurn(turnSpeed, -4, .5);
         au.pause(.1);
-        gu.gyroTurn(turnSpeed, -6, .5);
+        gu.gyroTurn(turnSpeed, -4, .5);
         au.shoot();
         au.pause(.25);
         au.launcherStop();
@@ -242,7 +247,7 @@ public class AutoPaths {
     }
 
     public void singlePickup(double driveSpeed, double turnSpeed, double launchSpeed){
-        gu.gyroTurn(turnSpeed, -13, 1);
+        gu.gyroTurn(turnSpeed, -12, 1);
         au.loaderStart();
         ae.encoderDrive(-driveSpeed, -60);
         gu.gyroTurn(turnSpeed, 0, 1);
@@ -250,7 +255,7 @@ public class AutoPaths {
         au.pause(.25);
         au.launcherStart(launchSpeed);
         gu.gyroTurn(turnSpeed, 0, .5);
-        au.pause(.25);
+        au.pause(.30);
         au.loaderStop();
         au.shoot();
         ae.encoderDrive(driveSpeed, 8);
@@ -258,13 +263,13 @@ public class AutoPaths {
     }
 
     public void quadPickup(double driveSpeed, double turnSpeed, double launchSpeed){
-        gu.gyroTurn(turnSpeed, -22, 1);
+        gu.gyroTurn(turnSpeed, -23, 1);
         au.barDown();
         au.loaderStart();
         ae.encoderDrive(-1, -55);
         ae.encoderDrive(-driveSpeed * .15, -18);
         au.barUp();
-        gu.gyroTurn(turnSpeed,-17, 1);
+        gu.gyroTurn(turnSpeed,-15, 1);
         ae.encoderDrive(driveSpeed, 17);
         au.launcherStart(launchSpeed);
         gu.gyroTurn(turnSpeed, 0, .5);
